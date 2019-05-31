@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Надежда Сувегина](https://up.htmlacademy.ru/javascript/17/user/977257).
-* Наставник: `Неизвестно`.
+* Наставник: [Артём Черкасов](https://htmlacademy.ru/profile/id530727).
 
 ---
 
