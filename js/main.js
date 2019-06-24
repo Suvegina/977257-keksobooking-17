@@ -1,10 +1,10 @@
 'use strict';
 
 var pins = [];
-var offerTypes = ["palace", "flat", "house", "bungalo"];
-var coordinateMap = document.querySelector('.map').offsetWidth;
+var offerTypes = ['palace', 'flat', 'house', 'bungalo'];
+// var coordinateMap = document.querySelector('.map').offsetWidth;
 
-console.log('.map');
+// console.log('.map');
 
 function getRandomItem(arr) {
   var index = Math.floor(Math.random() * arr.length); // Случайный индекс массива
