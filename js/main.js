@@ -2,13 +2,15 @@
 
 var pins = [];
 var offerTypes = ['palace', 'flat', 'house', 'bungalo'];
-
+var mapPin = document.querySelector('.map__pins');
 var MIN_WIDTH = 0;
 // Проверка размера ширины окна (класса)
-var MAX_WIDTH = document.querySelector('.map').offsetWidth;
+var MAX_WIDTH = mapPin.offsetWidth;
 // Мин и макс. положение location по Y в цикле
 var minRAndomHeight = 130;
 var maxRAndomHeight = 630;
+
+
 
 function getRandomItem(arr) {
   var index = Math.floor(Math.random() * arr.length); // Случайный индекс массива
@@ -27,7 +29,7 @@ function getRandomNumber(min, max) {
 for (var i = 0; i < 8; i++) {
   var pin = {
     author: {
-      avatar: 'img/avatars/user0' + i + '.png'
+      avatar: 'img/avatars/user0' + (i+1) + '.png'
     },
     offer: {
       type: getRandomItem(offerTypes)
@@ -38,8 +40,33 @@ for (var i = 0; i < 8; i++) {
     }
   };
 
+  mapPin.appendChild(makeButton(pin));
+  // console.log(pin);
   pins.push(pin);
 }
+
+function makeButton (pin) {
+  var element = document.createElement('button');
+  element.classList.add('map__pin', 'map__pin--main');
+  element.style.left = pin.location.x - 20 + 'px';
+  // Нужно убрать свойство border на пине
+  // Так же нужно переопределить цвет элемента :before 
+  // и перерасчитать его положение на карте
+  element.style.top = pin.location.y - 66 + 'px';
+  element.appendChild(makeImg(pin.author.avatar));
+
+  return element;
+};
+
+function makeImg (src) {
+  var element = document.createElement('img');
+  element.src = src;
+  element.alt = 'Метка объявления';
+  element.width = 40;
+  element.height = 44;
+  element.draggable = false;
+  return element;
+};
 
 /*
 
