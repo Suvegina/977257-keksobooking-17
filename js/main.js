@@ -3,9 +3,12 @@
 var pins = [];
 var offerTypes = ['palace', 'flat', 'house', 'bungalo'];
 
+var MIN_WIDTH = 0;
 // Проверка размера ширины окна (класса)
-// var coordinateMap = document.querySelector('.map').offsetWidth;
-// console.log('.map');
+var MAX_WIDTH = document.querySelector('.map').offsetWidth;
+// Мин и макс. положение location по Y в цикле
+var minRAndomHeight = 130;
+var maxRAndomHeight = 630;
 
 function getRandomItem(arr) {
   var index = Math.floor(Math.random() * arr.length); // Случайный индекс массива
@@ -30,8 +33,8 @@ for (var i = 0; i < 8; i++) {
       type: getRandomItem(offerTypes)
     },
     location: {
-      x: getRandomNumber(0, 1200),
-      y: getRandomNumber(130, 630)
+      x: getRandomNumber(MIN_WIDTH, MAX_WIDTH),
+      y: getRandomNumber(minRAndomHeight, maxRAndomHeight)
     }
   };
 
@@ -49,8 +52,8 @@ for (var i = 0; i < 8; i++) {
       <ellipse cx="35" cy="35" rx="35" ry="35" fill="rgba(255, 86, 53, 0.7)" />
       <text><textPath xlink:href="#tophalf" startOffset="0">Поставь меня куда-нибудь</textPath></text>
     </svg>
-  </button>  
-  
+  </button>
+
 */
 
 // var renderMapPins = function(mapPins) {
