@@ -52,7 +52,7 @@ for (var i = 0; i < 8; i++) {
   pins.push(pin);
 }
 
-function makeButton(pin) {
+function makeButton() {
   var element = document.createElement('button');
   element.classList.add('map__pin');
   element.style.left = pin.location.x - PIN_POSITION_X + 'px';
@@ -60,7 +60,7 @@ function makeButton(pin) {
   element.appendChild(makeImg(pin.author.avatar));
 
   return element;
-};
+}
 
 function makeImg(src) {
   var element = document.createElement('img');
