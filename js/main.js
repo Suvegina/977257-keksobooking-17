@@ -69,9 +69,11 @@ var renderButton = function () {
 var map = document.querySelector ('.map');
 
 // событие при клике на главную метку пина
-var mapClickHandler =  function() {
+var mapClickHandler = function () {
   map.classList.remove('map--faded');
   renderButton();
+  mainForm.classList.remove('ad-form--disabled');
+  disableFormControl();
   map.removeEventListener('click', mapClickHandler);
 };
 
@@ -81,8 +83,64 @@ map.addEventListener('click', mapClickHandler);
 
 
 // сама форма заполнения информации об объявлении;
-// Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled, добавленного на них или на их родительские блоки fieldset;
+// Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled,
+// добавленного на них или на их родительские блоки fieldset;
 // Форма с фильтрами .map__filters заблокирована так же, как и форма .ad-form;
 // Единственное доступное действие в неактивном состоянии — перетаскивание метки
 // .map__pin--main, являющейся контролом указания адреса объявления.
 // Первое перемещение метки переводит страницу в активное состояние.
+
+var mainForm = document.querySelector('.ad-form');
+var inputForm = mainForm.querySelectorAll('input');
+var selectForm = mainForm.querySelectorAll('select');
+
+inputForm.disabled = true;
+selectForm.disabled = true;
+
+// сделать рабочеспособный код
+var disableFormControl = function (state) {
+  for (var i = 0; inputForm.length > i; i++) {
+    inputForm[i].disabled = state;
+  }
+  for (var i = 0; selectForm.length > i; i++) {
+    selectForm[i].disabled = state;
+  }
+};
+// var workElementsForm = function() {
+//   if (mapClickHandler() {
+//     inputForm.classList.remove('disabled');
+//     selectForm.classList.remove('disabled');
+//   });
+// };
+
+// var employlementsForm = function() {
+//   inputForm.classList.remove('disabled');
+//   selectForm.classList.remove('disabled');
+// };
+
+
+/* Временное ТЗ
+
+Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
+Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled,
+добавленного на них или на их родительские блоки fieldset;
+Форма с фильтрами .map__filters заблокирована так же, как и форма .ad-form;
+Единственное доступное действие в неактивном состоянии — перетаскивание метки
+.map__pin--main, являющейся контролом указания адреса объявления.
+Первое перемещение метки переводит страницу в активное состояние.
+*/
+
+var currentPin = document.querySelector('.map__pin map__pin--main');
+var pinMouseupHandler = function ()
+
+document.addEventListener('mouseup', function (evt) {
+
+});
+
+var currentPin = document.querySelector('.map__pin map__pin--main');
+var address = document.querySelector('#address');
+// у нас будет срабатывать событие mouseup на главную метку после загрузки страницы
+// и мы должны определить координаты главного пина и
+// установить адрес в форме наприер "100, 300"
+
+// это инпут - там просто строка в нужном формате
