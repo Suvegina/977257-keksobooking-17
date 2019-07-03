@@ -66,6 +66,18 @@ var renderButton = function () {
   }
 };
 
+
+/* Временное ТЗ
+
+Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
+Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled,
+добавленного на них или на их родительские блоки fieldset;
+Форма с фильтрами .map__filters заблокирована так же, как и форма .ad-form;
+Единственное доступное действие в неактивном состоянии — перетаскивание метки
+.map__pin--main, являющейся контролом указания адреса объявления.
+Первое перемещение метки переводит страницу в активное состояние.
+*/
+
 var map = document.querySelector ('.map');
 
 // событие при клике на главную метку пина
@@ -79,8 +91,32 @@ var mapClickHandler = function () {
 
 map.addEventListener('click', mapClickHandler);
 
-// добавляю всем полям не активное состояние, а именно:
 
+var form = document.querySelector('.ad-form');
+var allFieldsetForm = form.querySelectorAll('fieldset');
+
+// добавляю всем полям не активное состояние
+
+// var disableFormControl = function (state) {
+//   allFieldsetForm.forEach(function(el) {
+//     el.disabled = state;
+//   });
+// };
+
+// циклом задаю недоступность фиелдсетов формы
+var enableFormControl = function () {
+  for (var j = 0; j <= allFieldsetForm.length; j++) {
+    allFieldsetForm.disabled = true;
+  };
+  return allFieldsetForm[j];
+};
+
+// с помощью функции определяю удаление недоступности фиелдсетов в форме
+var disableFormControl = function () {
+  for (var i = 0; i <= allFieldsetForm.length; i++) {
+  allFieldsetForm[i].disabled = false;
+  };
+};
 
 // сама форма заполнения информации об объявлении;
 // Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled,
@@ -90,28 +126,14 @@ map.addEventListener('click', mapClickHandler);
 // .map__pin--main, являющейся контролом указания адреса объявления.
 // Первое перемещение метки переводит страницу в активное состояние.
 
-var mainForm = document.querySelector('.ad-form');
-var inputForm = mainForm.querySelectorAll('input');
-var selectForm = mainForm.querySelectorAll('select');
+// var inputForm = mainForm.querySelectorAll('input');
+// var selectForm = mainForm.querySelectorAll('select');
 
-inputForm.disabled = true;
-selectForm.disabled = true;
+// inputForm.disabled = true;
+// selectForm.disabled = true;
 
 // сделать рабочеспособный код
-var disableFormControl = function (state) {
-  for (var i = 0; inputForm.length > i; i++) {
-    inputForm[i].disabled = state;
-  }
-  for (var i = 0; selectForm.length > i; i++) {
-    selectForm[i].disabled = state;
-  }
-};
-// var workElementsForm = function() {
-//   if (mapClickHandler() {
-//     inputForm.classList.remove('disabled');
-//     selectForm.classList.remove('disabled');
-//   });
-// };
+// ----------------------------------------------------------------
 
 // var employlementsForm = function() {
 //   inputForm.classList.remove('disabled');
@@ -119,28 +141,14 @@ var disableFormControl = function (state) {
 // };
 
 
-/* Временное ТЗ
-
-Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
-Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled,
-добавленного на них или на их родительские блоки fieldset;
-Форма с фильтрами .map__filters заблокирована так же, как и форма .ad-form;
-Единственное доступное действие в неактивном состоянии — перетаскивание метки
-.map__pin--main, являющейся контролом указания адреса объявления.
-Первое перемещение метки переводит страницу в активное состояние.
-*/
-
-var currentPin = document.querySelector('.map__pin map__pin--main');
-var pinMouseupHandler = function ()
-
-document.addEventListener('mouseup', function (evt) {
-
-});
-
 var currentPin = document.querySelector('.map__pin map__pin--main');
 var address = document.querySelector('#address');
 // у нас будет срабатывать событие mouseup на главную метку после загрузки страницы
+// var pinMouseupHandler = function () {
+// };
+
+
 // и мы должны определить координаты главного пина и
-// установить адрес в форме наприер "100, 300"
+// установить адрес в форме например "100, 300"
 
 // это инпут - там просто строка в нужном формате
