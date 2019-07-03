@@ -123,8 +123,14 @@ var disableFormControl = function () {
 
 var currentPin = document.querySelector('.map__pin map__pin--main');
 var address = document.querySelector('#address');
+
+
+address.addEventListener('change', function() {
+  console.log(address.value);
+});
 // у нас будет срабатывать событие mouseup на главную метку после загрузки страницы
 // var pinMouseupHandler = function () {
+//   form.classList.add('ad-form--disabled');
 // };
 
 
