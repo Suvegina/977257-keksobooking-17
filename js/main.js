@@ -127,18 +127,17 @@ var disableFormControl = function () {
 //     el.disabled = state;
 //   });
 // };
-var address = document.querySelector('#address').value = '570,375';
-// address.
-// address.addEventListener('change', function() {
-//   console.log(address.value);
-// });
+
+var address = document.querySelector('#address');
+
+// (Событие change выстреливает при изменение полей формы и передает параметры метки выбранного пина. 
+// Событие change отслеживает поля <input>, <textarea> и <select>)
+address.addEventListener('change', function() {
+  console.log(address.value);
+  var addressValue = address.value.split(',');
+  console.log(addressValue);
+  currentPin.style.top = addressValue[1] + 'px';
+  currentPin.style.left = addressValue[0] + 'px';
+});
 
 // у нас будет срабатывать событие mouseup на главную метку после загрузки страницы
-// var pinMouseupHandler = function () {
-//   form.classList.add('ad-form--disabled');
-// };
-
-// и мы должны определить координаты главного пина и
-// установить адрес в форме например "100, 300"
-
-// это инпут - там просто строка в нужном формате
