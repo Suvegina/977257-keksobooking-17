@@ -130,12 +130,12 @@ var disableFormControl = function () {
 
 var address = document.querySelector('#address');
 
-// (Событие change выстреливает при изменение полей формы и передает параметры метки выбранного пина. 
+// (Событие change выстреливает при изменение полей формы и передает параметры метки выбранного пина.
 // Событие change отслеживает поля <input>, <textarea> и <select>)
-address.addEventListener('change', function() {
-  console.log(address.value);
+address.addEventListener('change', function () {
+  // console.log(address.value);
   var addressValue = address.value.split(',');
-  console.log(addressValue);
+  // console.log(addressValue);
   currentPin.style.top = addressValue[1] + 'px';
   currentPin.style.left = addressValue[0] + 'px';
 });
