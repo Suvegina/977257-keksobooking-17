@@ -42,7 +42,7 @@ var makeButton = function (pin) {
   element.querySelector('img').src = pin.author.avatar;
 
   return element;
-}
+};
 // функция для генерации пинов
 var generatePin = function (index) {
   var newPin = {
@@ -71,6 +71,8 @@ var renderButton = function () {
 };
 
 
+form.action = 'https://js.dump.academy/keksobooking';
+
 /* Временное ТЗ
 Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
 Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled,
@@ -81,7 +83,7 @@ var renderButton = function () {
 Первое перемещение метки переводит страницу в активное состояние.
 */
 
-var map = document.querySelector ('.map');
+var map = document.querySelector('.map');
 var currentPin = document.querySelector('.map__pin--main');
 
 // событие при клике на главную метку пина
@@ -95,18 +97,18 @@ var currentPinClickHandler = function () {
 
 currentPin.addEventListener('click', currentPinClickHandler);
 
-//событие на передвижение пина относительно координат
-var currentPinMouseupHandler = function(currentpin) {
-  address.value = '570,375';
-};
+// событие на передвижение пина относительно координат
+// var currentPinMouseupHandler = function (currentpin) {
+//   address.value = '570,375';
+// };
 
-currentPin.addEventListener('mouseup', currentPinMouseupHandler);
+// currentPin.addEventListener('mouseup', currentPinMouseupHandler);
 
 // циклом задаю недоступность фиелдсетов формы
 var enableFormControl = function () {
   for (var j = 0; j < allFieldsetForm.length; j++) {
     allFieldsetForm[j].setAttribute('disabled', '');
-  };
+  }
 };
 
 enableFormControl();
@@ -115,7 +117,7 @@ enableFormControl();
 var disableFormControl = function () {
   for (var i = 0; i < allFieldsetForm.length; i++) {
     allFieldsetForm[i].removeAttribute('disabled');
-  };
+  }
 };
 
 // альтернатива добавления всем полям не активного состояния
