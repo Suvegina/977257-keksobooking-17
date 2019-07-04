@@ -35,7 +35,7 @@ function getRandomNumber(min, max) {
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-function makeButton(pin) {
+var makeButton = function (pin) {
   var element = pinTemplate.cloneNode(true);
   element.style.left = pin.location.x - PIN_POSITION_X + 'px';
   element.style.top = pin.location.y - PIN_POSITION_Y + 'px';
@@ -82,20 +82,25 @@ var renderButton = function () {
 */
 
 var map = document.querySelector ('.map');
-
-// немного подправить: нужно сделать кликабельность только по главному пину
-// map__pin--main
+var currentPin = document.querySelector('.map__pin--main');
 
 // событие при клике на главную метку пина
-var mapClickHandler = function () {
+var currentPinClickHandler = function () {
   map.classList.remove('map--faded');
   renderButton();
   form.classList.remove('ad-form--disabled');
   disableFormControl();
-  map.removeEventListener('click', mapClickHandler);
+  currentPin.removeEventListener('click', currentPinClickHandler);
 };
 
-map.addEventListener('click', mapClickHandler);
+currentPin.addEventListener('click', currentPinClickHandler);
+
+//событие на передвижение пина относительно координат
+var currentPinMouseupHandler = function(currentpin) {
+  address.value = '570,375';
+};
+
+currentPin.addEventListener('mouseup', currentPinMouseupHandler);
 
 // циклом задаю недоступность фиелдсетов формы
 var enableFormControl = function () {
@@ -120,19 +125,16 @@ var disableFormControl = function () {
 //     el.disabled = state;
 //   });
 // };
+var address = document.querySelector('#address').value = '570,375';
+// address.
+// address.addEventListener('change', function() {
+//   console.log(address.value);
+// });
 
-var currentPin = document.querySelector('.map__pin map__pin--main');
-var address = document.querySelector('#address');
-
-
-address.addEventListener('change', function() {
-  console.log(address.value);
-});
 // у нас будет срабатывать событие mouseup на главную метку после загрузки страницы
 // var pinMouseupHandler = function () {
 //   form.classList.add('ad-form--disabled');
 // };
-
 
 // и мы должны определить координаты главного пина и
 // установить адрес в форме например "100, 300"
