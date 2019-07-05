@@ -29,7 +29,7 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pi
 function getRandomItem(arr) {
   var index = Math.floor(Math.random() * arr.length);
   return arr[index];
-};
+}
 
 // Находим случайное число для координат
 function getRandomNumber(min, max) {
@@ -37,7 +37,7 @@ function getRandomNumber(min, max) {
   rand = Math.round(rand);
 
   return rand;
-};
+}
 
 var makeButton = function (pin) {
   var element = pinTemplate.cloneNode(true);
