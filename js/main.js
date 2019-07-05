@@ -17,13 +17,19 @@ var PIN_POSITION_Y = 62;
 
 var form = document.querySelector('.ad-form');
 var allFieldsetForm = form.querySelectorAll('fieldset');
+var address = document.querySelector('#address');
+
+var map = document.querySelector('.map');
+var currentPin = document.querySelector('.map__pin--main');
+
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
 // Находим случайный индекс массива
 // Для рандомного подбора параметров 'offerTypes'
 function getRandomItem(arr) {
   var index = Math.floor(Math.random() * arr.length);
   return arr[index];
-}
+};
 
 // Находим случайное число для координат
 function getRandomNumber(min, max) {
@@ -31,9 +37,7 @@ function getRandomNumber(min, max) {
   rand = Math.round(rand);
 
   return rand;
-}
-
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+};
 
 var makeButton = function (pin) {
   var element = pinTemplate.cloneNode(true);
@@ -43,6 +47,7 @@ var makeButton = function (pin) {
 
   return element;
 };
+
 // функция для генерации пинов
 var generatePin = function (index) {
   var newPin = {
@@ -70,21 +75,7 @@ var renderButton = function () {
   }
 };
 
-
 form.action = 'https://js.dump.academy/keksobooking';
-
-/* Временное ТЗ
-Форма заполнения информации об объявлении .ad-form содержит класс ad-form--disabled;
-Все <input> и <select> формы .ad-form заблокированы с помощью атрибута disabled,
-добавленного на них или на их родительские блоки fieldset;
-Форма с фильтрами .map__filters заблокирована так же, как и форма .ad-form;
-Единственное доступное действие в неактивном состоянии — перетаскивание метки
-.map__pin--main, являющейся контролом указания адреса объявления.
-Первое перемещение метки переводит страницу в активное состояние.
-*/
-
-var map = document.querySelector('.map');
-var currentPin = document.querySelector('.map__pin--main');
 
 // событие при клике на главную метку пина
 var currentPinClickHandler = function () {
@@ -104,12 +95,8 @@ var getCoordinatePin = function () {
   address.value = x + ', ' + y;
 };
 
-currentPin.addEventListener('click', getCoordinatePin);
-
-// событие на передвижение пина относительно координат
-// var currentPinMouseupHandler = function (currentpin) {
-//   address.value = '570,375';
-// };
+getCoordinatePin();
+currentPin.addEventListener('mouseup', getCoordinatePin);
 
 // currentPin.addEventListener('mouseup', currentPinMouseupHandler);
 
@@ -129,59 +116,13 @@ var disableFormControl = function () {
   }
 };
 
-// альтернатива добавления всем полям не активного состояния
-// полурабочая версия:
-// var disableFormControl = function (state) {
-//   allFieldsetForm.forEach(function(el) {
-//     el.disabled = state;
-//   });
-// };
-
-
-var valuePosition pin = function ('pinX', 'pinY') {
-  currentPin.style.top = addressValue['pinX'] + 'px';
-  currentPin.style.left = addressValue['pinY'] + 'px';
-};
-
-var address = document.querySelector('#address');
-address.value = outputValuesPin;
-
-
-var outputValuesPin = function () {
-  var addressValue = address.value.split(',');
-
-  currentPin.style.top = addressValue[1] + 'px';
-  currentPin.style.left = addressValue[0] + 'px';
-};
-
-// address.value = '570,375';
-
-// (Событие change выстреливает при изменение полей формы и передает параметры метки выбранного пина.
-// Событие change отслеживает поля <input>, <textarea> и <select>)
-address.addEventListener('change', function () {
-  // console.log(address.value);
-  var addressValue = address.value.split(',');
-  // console.log(addressValue);
-  currentPin.style.top = addressValue[1] + 'px';
-  currentPin.style.left = addressValue[0] + 'px';
-});
-
-
-
-// у нас будет срабатывать событие mouseup на главную метку после загрузки страницы
-
-var currentPinMouseupHandler = function () {
-  outputValuesPin();
-  currentPin.removeEventListener('mouseup', currentPinMouseupHandler);
-};
-
-currentPin.addEventListener('mouseup', currentPinMouseupHandler);
-  // var addressValue = address.value.split(',');
-  // currentPin.style.top = addressValue[1] + 'px';
-  // currentPin.style.left = addressValue[0] + 'px';
-
-
-/*
-взять координаты пина, получить строку с запятой с ними и установить в инпут.
-
-*/
+// // На перспективу
+// // (Событие change выстреливает при изменение полей формы и передает параметры метки выбранного пина.
+// // Событие change отслеживает поля <input>, <textarea> и <select>)
+// address.addEventListener('change', function () {
+//   // console.log(address.value);
+//   var addressValue = address.value.split(',');
+//   // console.log(addressValue);
+//   currentPin.style.top = addressValue[1] + 'px';
+//   currentPin.style.left = addressValue[0] + 'px';
+// });
