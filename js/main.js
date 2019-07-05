@@ -92,13 +92,19 @@ var currentPinClickHandler = function () {
   renderButton();
   form.classList.remove('ad-form--disabled');
   disableFormControl();
-  // var x = currentPin.style.left;
-  // var y = currentPin.style.top;
-
   currentPin.removeEventListener('click', currentPinClickHandler);
 };
 
 currentPin.addEventListener('click', currentPinClickHandler);
+
+// событие при клике на главную метку пина
+var getCoordinatePin = function () {
+  var x = currentPin.style.left.replace('px', '');
+  var y = currentPin.style.top.replace('px', '');
+  address.value = x + ', ' + y;
+};
+
+currentPin.addEventListener('click', getCoordinatePin);
 
 // событие на передвижение пина относительно координат
 // var currentPinMouseupHandler = function (currentpin) {
@@ -131,18 +137,25 @@ var disableFormControl = function () {
 //   });
 // };
 
+
+
+
+
+
 var address = document.querySelector('#address');
 address.value = '570,375';
 
-// // (Событие change выстреливает при изменение полей формы и передает параметры метки выбранного пина.
-// // Событие change отслеживает поля <input>, <textarea> и <select>)
-// address.addEventListener('change', function () {
-//   // console.log(address.value);
-//   var addressValue = address.value.split(',');
-//   // console.log(addressValue);
-//   currentPin.style.top = addressValue[1] + 'px';
-//   currentPin.style.left = addressValue[0] + 'px';
-// });
+// (Событие change выстреливает при изменение полей формы и передает параметры метки выбранного пина.
+// Событие change отслеживает поля <input>, <textarea> и <select>)
+address.addEventListener('change', function () {
+  // console.log(address.value);
+  var addressValue = address.value.split(',');
+  // console.log(addressValue);
+  currentPin.style.top = addressValue[1] + 'px';
+  currentPin.style.left = addressValue[0] + 'px';
+});
+
+
 
 // у нас будет срабатывать событие mouseup на главную метку после загрузки страницы
 
