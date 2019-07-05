@@ -131,8 +131,24 @@ var disableFormControl = function () {
 //   });
 // };
 
+
+var valuePosition pin = function ('pinX', 'pinY') {
+  currentPin.style.top = addressValue['pinX'] + 'px';
+  currentPin.style.left = addressValue['pinY'] + 'px';
+};
+
 var address = document.querySelector('#address');
-address.value = '570,375';
+address.value = outputValuesPin;
+
+
+var outputValuesPin = function () {
+  var addressValue = address.value.split(',');
+
+  currentPin.style.top = addressValue[1] + 'px';
+  currentPin.style.left = addressValue[0] + 'px';
+};
+
+// address.value = '570,375';
 
 // // (Событие change выстреливает при изменение полей формы и передает параметры метки выбранного пина.
 // // Событие change отслеживает поля <input>, <textarea> и <select>)
@@ -147,10 +163,17 @@ address.value = '570,375';
 // у нас будет срабатывать событие mouseup на главную метку после загрузки страницы
 
 var currentPinMouseupHandler = function () {
-  var addressValue = address.value.split(',');
-  currentPin.style.top = addressValue[1] + 'px';
-  currentPin.style.left = addressValue[0] + 'px';
+  outputValuesPin();
   currentPin.removeEventListener('mouseup', currentPinMouseupHandler);
 };
 
 currentPin.addEventListener('mouseup', currentPinMouseupHandler);
+  // var addressValue = address.value.split(',');
+  // currentPin.style.top = addressValue[1] + 'px';
+  // currentPin.style.left = addressValue[0] + 'px';
+
+
+/*
+взять координаты пина, получить строку с запятой с ними и установить в инпут.
+
+*/
