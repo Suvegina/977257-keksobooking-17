@@ -26,13 +26,16 @@ var filtersChild = filters.children;
 var map = document.querySelector('.map');
 var currentPin = document.querySelector('.map__pin--main');
 
+var buildingType = form.querySelector('#type');
+var nightSelect = form.querySelector('#price');
+
 
 // Находим случайный индекс массива
 // Для рандомного подбора параметров 'offerTypes'
 var getRandomItem = function (arr) {
   var index = Math.floor(Math.random() * arr.length);
   return arr[index];
-}
+};
 
 // Находим случайное число для координат
 var getRandomNumber = function (min, max) {
@@ -40,7 +43,7 @@ var getRandomNumber = function (min, max) {
   rand = Math.round(rand);
 
   return rand;
-}
+};
 
 var makeButton = function (pin) {
   var element = pinTemplate.cloneNode(true);
@@ -148,10 +151,42 @@ var disableFiltersControl = function () {
 //   currentPin.style.left = addressValue[0] + 'px';
 // });
 
-// Ограничения, накладываемые на поля ввода
 // Поле «Заголовок объявления»
+var titleField = form.querySelector('.ad-form__element');
 
-// Обязательное текстовое поле;
-// Минимальная длина — 30 символов;
-// Максимальная длина — 100 символов.
+// Ограничения, накладываемые на поле ввода заголовка
+titleField.addEventListener('invalid', function(evt) {
+  if (titleField.validity.tooShort) {
+    titleField.setCustomValidity('Минимальная длина — 30 символов');
+  } else if (titleField.validity.tooLong) {
+    titleField.setCustomValidity('Максимальная длина — 100 символов');
+  } else if (titleField.validity.valueMissing) {
+    titleField.setCustomValidity('Обязательное текстовое поле');
+  }
+});
+
+
+// находим поле select (выпад. список) по id-шнику
+
+buildingType.addEventListener('change', function(evt) {
+  var target = evt.currentTarget;
+  var selected = target.selectedOptions[0];
+  var minLength = selected.getAttribute('minlength');
+
+  nightSelect.setAttribute('min', minLength);
+  nightSelect.setAttribute('placeholder', minLength);
+});
+
+nightSelect.addEventListener('change', function(evt) {
+  var target = evt.currentTarget;
+  var value = target.value;
+  if (value > 1000000) {
+    evt.preventDefault();
+  }
+});
+
+// Поля «Время заезда» и «Время выезда» синхронизированы:
+// при изменении значения одного поля, во втором выделяется
+// соответствующее ему. Например, если время заезда указано «после 14»,
+// то время выезда будет равно «до 14» и наоборот.
 
