@@ -3,6 +3,7 @@
 var pins = [];
 var offerTypes = ['palace', 'flat', 'house', 'bungalo'];
 var mapPin = document.querySelector('.map__pins');
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var MIN_WIDTH = 0;
 // Проверка размера ширины окна (класса)
 // var MAX_WIDTH = mapPin.offsetWidth;
@@ -19,10 +20,12 @@ var form = document.querySelector('.ad-form');
 var allFieldsetForm = form.querySelectorAll('fieldset');
 var address = document.querySelector('#address');
 
+var filters = document.querySelector('.map__filters');
+var filtersChild = filters.children;
+
 var map = document.querySelector('.map');
 var currentPin = document.querySelector('.map__pin--main');
 
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
 // Находим случайный индекс массива
 // Для рандомного подбора параметров 'offerTypes'
@@ -83,6 +86,7 @@ var currentPinClickHandler = function () {
   renderButton();
   form.classList.remove('ad-form--disabled');
   disableFormControl();
+  disableFiltersControl();
   currentPin.removeEventListener('click', currentPinClickHandler);
 };
 
@@ -97,6 +101,7 @@ var getCoordinatePin = function () {
 
 getCoordinatePin();
 currentPin.addEventListener('mouseup', getCoordinatePin);
+
 
 // currentPin.addEventListener('mouseup', currentPinMouseupHandler);
 
@@ -113,6 +118,20 @@ enableFormControl();
 var disableFormControl = function () {
   for (var i = 0; i < allFieldsetForm.length; i++) {
     allFieldsetForm[i].removeAttribute('disabled');
+  }
+};
+
+// тоже самое проделываю с фильтрами
+var enableFiltersControl = function () {
+  for (var j = 0; j < filtersChild.length; j++) {
+    filtersChild[j].setAttribute('disabled', '');
+  }
+};
+enableFiltersControl();
+
+var disableFiltersControl = function () {
+  for (var i = 0; i < filtersChild.length; i++) {
+    filtersChild[i].removeAttribute('disabled');
   }
 };
 
