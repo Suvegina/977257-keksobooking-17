@@ -26,13 +26,13 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pi
 
 // Находим случайный индекс массива
 // Для рандомного подбора параметров 'offerTypes'
-function getRandomItem(arr) {
+var getRandomItem = function (arr) {
   var index = Math.floor(Math.random() * arr.length);
   return arr[index];
 }
 
 // Находим случайное число для координат
-function getRandomNumber(min, max) {
+var getRandomNumber = function (min, max) {
   var rand = min + Math.random() * (max - min + 1);
   rand = Math.round(rand);
 
