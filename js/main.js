@@ -112,7 +112,7 @@ currentPin.addEventListener('mouseup', getCoordinatePin);
 // циклом задаю недоступность фиелдсетов формы
 var enableFormControl = function () {
   for (var j = 0; j < allFieldsetForm.length; j++) {
-    allFieldsetForm[j].setAttribute('disabled', '');
+    allFieldsetForm[j].disabled = 'disabled';
   }
 };
 
@@ -121,14 +121,14 @@ enableFormControl();
 // с помощью функции определяю удаляю добавленные ранее disabled
 var disableFormControl = function () {
   for (var i = 0; i < allFieldsetForm.length; i++) {
-    allFieldsetForm[i].removeAttribute('disabled');
+    allFieldsetForm[i].disabled = '';
   }
 };
 
 // тоже самое проделываю с фильтрами
 var enableFiltersControl = function () {
   for (var j = 0; j < filtersChild.length; j++) {
-    filtersChild[j].setAttribute('disabled', '');
+    filtersChild[j].disabled = 'disabled';
   }
 };
 
@@ -136,7 +136,7 @@ enableFiltersControl();
 
 var disableFiltersControl = function () {
   for (var i = 0; i < filtersChild.length; i++) {
-    filtersChild[i].removeAttribute('disabled');
+    filtersChild[i].disabled = '';
   }
 };
 
@@ -187,38 +187,35 @@ nightSelect.addEventListener('change', function (evt) {
   }
 });
 
+
 // Поля «Время заезда» и «Время выезда» синхронизированы:
 // при изменении значения одного поля, во втором выделяется
 // соответствующее ему. Например, если время заезда указано «после 14»,
 // то время выезда будет равно «до 14» и наоборот.
 
-// Определяем функцию которая синхронизирует поле время заезда с полем время выезда
-var synchronizationDateIn = function () {
-  for (var i = 0; i < timeIn.children.length; i++) {
-    if (timeIn.children[i].selected) {
-      for (var j = 0; j < timeOut.children.length; j++) {
-        if (timeIn.children[i].value === timeOut.children[j].value) {
-          timeOut.children[j].selected = true;
+// Определяем универсальную функцию, которая будет синхронизовать 1-е поле (время заезда) со 2-м полем (время выезда)
+
+var synchronizationDate = function (from, to) {
+  for (var i = 0; i < from.children.length; i++) {
+    if (from.children[i].selected) {
+      for (var j = 0; j < to.children.length; j++) {
+        if (from.children[i].value === to.children[j].value) {
+          to.children[j].selected = true;
         }
       }
     }
   }
 };
 
-// Определяем функцию которая синхронизирует поле время выезда с полем время заезда
-var synchronizationDateOut = function () {
-  for (var i = 0; i < timeOut.children.length; i++) {
-    if (timeOut.children[i].selected) {
-      for (var j = 0; j < timeIn.children.length; j++) {
-        if (timeOut.children[i].value === timeIn.children[j].value) {
-          timeIn.children[j].selected = true;
-        }
-      }
-    }
-  }
-};
 
-// вешаем полученные функции на события отслеживания
-// выбранных select(ов) и 'выстреливания' изменений
-timeIn.addEventListener('change', synchronizationDateIn);
-timeOut.addEventListener('change', synchronizationDateOut);
+// вешаем полученные функции на события отслеживания:
+// Сначала вешаю событие на 1-е поле (время заезда)
+
+timeIn.addEventListener('change', function (evt) {
+  synchronizationDate(timeIn, timeOut);
+});
+
+// Потом вешаю событие на 2-е поле (время выезда)
+timeOut.addEventListener('change', function (evt) {
+  synchronizationDate(timeOut, timeIn);
+});
