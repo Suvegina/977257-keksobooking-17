@@ -211,11 +211,11 @@ var synchronizationDate = function (from, to) {
 // вешаем полученные функции на события отслеживания:
 // Сначала вешаю событие на 1-е поле (время заезда)
 
-timeIn.addEventListener('change', function (evt) {
+timeIn.addEventListener('change', function () {
   synchronizationDate(timeIn, timeOut);
 });
 
 // Потом вешаю событие на 2-е поле (время выезда)
-timeOut.addEventListener('change', function (evt) {
+timeOut.addEventListener('change', function () {
   synchronizationDate(timeOut, timeIn);
 });
