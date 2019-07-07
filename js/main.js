@@ -157,7 +157,7 @@ var disableFiltersControl = function () {
 var titleField = form.querySelector('.ad-form__element');
 
 // Ограничения, накладываемые на поле ввода заголовка
-titleField.addEventListener('invalid', function(evt) {
+titleField.addEventListener('invalid', function () {
   if (titleField.validity.tooShort) {
     titleField.setCustomValidity('Минимальная длина — 30 символов');
   } else if (titleField.validity.tooLong) {
@@ -170,7 +170,7 @@ titleField.addEventListener('invalid', function(evt) {
 
 // находим поле select (выпад. список) по id-шнику
 
-buildingType.addEventListener('change', function(evt) {
+buildingType.addEventListener('change', function (evt) {
   var target = evt.currentTarget;
   var selected = target.selectedOptions[0];
   var minLength = selected.getAttribute('minlength');
@@ -179,7 +179,7 @@ buildingType.addEventListener('change', function(evt) {
   nightSelect.setAttribute('placeholder', minLength);
 });
 
-nightSelect.addEventListener('change', function(evt) {
+nightSelect.addEventListener('change', function (evt) {
   var target = evt.currentTarget;
   var value = target.value;
   if (value > 1000000) {
