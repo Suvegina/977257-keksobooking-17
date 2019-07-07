@@ -29,6 +29,9 @@ var currentPin = document.querySelector('.map__pin--main');
 var buildingType = form.querySelector('#type');
 var nightSelect = form.querySelector('#price');
 
+// определяем нахождение полей select по id-шникам
+var timeIn = form.querySelector('#timein');
+var timeOut = form.querySelector('#timeout');
 
 // Находим случайный индекс массива
 // Для рандомного подбора параметров 'offerTypes'
@@ -106,8 +109,6 @@ getCoordinatePin();
 currentPin.addEventListener('mouseup', getCoordinatePin);
 
 
-// currentPin.addEventListener('mouseup', currentPinMouseupHandler);
-
 // циклом задаю недоступность фиелдсетов формы
 var enableFormControl = function () {
   for (var j = 0; j < allFieldsetForm.length; j++) {
@@ -130,6 +131,7 @@ var enableFiltersControl = function () {
     filtersChild[j].setAttribute('disabled', '');
   }
 };
+
 enableFiltersControl();
 
 var disableFiltersControl = function () {
@@ -190,3 +192,30 @@ nightSelect.addEventListener('change', function(evt) {
 // соответствующее ему. Например, если время заезда указано «после 14»,
 // то время выезда будет равно «до 14» и наоборот.
 
+
+var synchronizationDateIn = function () {
+  for (var i = 0; i < timeIn.children.length; i++) {
+    if (timeIn.children[i].selected) {
+      for (var j = 0; j < timeOut.children.length; j++) {
+        if (timeIn.children[i].value === timeOut.children[j].value) {
+          timeOut.children[j].selected = true;
+        }
+      }
+    }
+  }
+};
+
+var synchronizationDateOut = function () {
+  for (var i = 0; i < timeOut.children.length; i++) {
+    if (timeOut.children[i].selected) {
+      for (var j = 0; j < timeIn.children.length; j++) {
+        if (timeOut.children[i].value === timeIn.children[j].value) {
+          timeIn.children[j].selected = true;
+        }
+      }
+    }
+  }
+};
+
+timeIn.addEventListener('change', synchronizationDateIn);
+timeOut.addEventListener('change', synchronizationDateOut);
