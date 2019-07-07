@@ -192,7 +192,7 @@ nightSelect.addEventListener('change', function (evt) {
 // соответствующее ему. Например, если время заезда указано «после 14»,
 // то время выезда будет равно «до 14» и наоборот.
 
-
+// Определяем функцию которая синхронизирует поле время заезда с полем время выезда
 var synchronizationDateIn = function () {
   for (var i = 0; i < timeIn.children.length; i++) {
     if (timeIn.children[i].selected) {
@@ -205,6 +205,7 @@ var synchronizationDateIn = function () {
   }
 };
 
+// Определяем функцию которая синхронизирует поле время выезда с полем время заезда
 var synchronizationDateOut = function () {
   for (var i = 0; i < timeOut.children.length; i++) {
     if (timeOut.children[i].selected) {
@@ -217,5 +218,7 @@ var synchronizationDateOut = function () {
   }
 };
 
+// вешаем полученные функции на события отслеживания
+// выбранных select(ов) и 'выстреливания' изменений
 timeIn.addEventListener('change', synchronizationDateIn);
 timeOut.addEventListener('change', synchronizationDateOut);
