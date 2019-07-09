@@ -92,7 +92,6 @@ form.action = 'https://js.dump.academy/keksobooking';
 var movingCurrentPin = function () {
 
   // var map = document.querySelector('.map');
-  var currentPin = map.querySelector('.map__pin--main');
   // var currentPin = map.querySelector('.map__pin--main');
 
   currentPin.addEventListener('mousedown', function (evt) {
@@ -103,11 +102,11 @@ var movingCurrentPin = function () {
       y: evt.clientY
     };
 
-    var dragged = false;
+    // var dragged = false;
 
     var currentPinMouseMoveHandler = function (moveEvt) {
       moveEvt.preventDefault();
-      dragged = true;
+      // dragged = true;
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
