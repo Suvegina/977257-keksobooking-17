@@ -17,11 +17,11 @@ var PIN_POSITION_X = 20;
 var PIN_POSITION_Y = 62;
 
 var form = document.querySelector('.ad-form');
-var allFieldsetForm = form.querySelectorAll('fieldset');
+var allFormFieldsets = form.querySelectorAll('fieldset');
 var address = document.querySelector('#address');
 
-var filters = document.querySelector('.map__filters');
-var filtersChild = filters.children;
+var filtersElements = document.querySelector('.map__filters').children;
+// var filtersChild = filters.children;
 
 var map = document.querySelector('.map');
 var currentPin = document.querySelector('.map__pin--main');
@@ -92,10 +92,10 @@ form.action = 'https://js.dump.academy/keksobooking';
 var movingCurrentPin = function () {
 
   // var map = document.querySelector('.map');
-  var currentPinHandler = map.querySelector('.map__pin--main');
+  var currentPin = map.querySelector('.map__pin--main');
   // var currentPin = map.querySelector('.map__pin--main');
 
-  currentPinHandler.addEventListener('mousedown', function (evt) {
+  currentPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -107,6 +107,8 @@ var movingCurrentPin = function () {
 
     var currentPinMouseMoveHandler = function (moveEvt) {
       moveEvt.preventDefault();
+      dragged = true;
+
       var shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
@@ -118,8 +120,8 @@ var movingCurrentPin = function () {
       // При каждом движении мыши нам нужно обновлять
       // смещение относительно первоначальной точки, чтобы диалог
       // смещался на необходимую величину.
-      map.style.top = (map.offsetTop - shift.y) + 'px';
-      map.style.left = (map.offsetLeft - shift.x) + 'px';
+      currentPin.style.top = (currentPin.offsetTop - shift.y) + 'px';
+      currentPin.style.left = (currentPin.offsetLeft - shift.x) + 'px';
     };
 
     var currentPinMouseUpHandler = function (upEvt) {
@@ -127,30 +129,22 @@ var movingCurrentPin = function () {
 
       document.removeEventListener('mousemove', currentPinMouseMoveHandler);
       document.removeEventListener('mouseup', currentPinMouseUpHandler);
-      if (dragged) {
-        var preventDefaultClickHandler = function () {
-          evt.preventDefault();
-          currentPinHandler.removeEventListener('click', preventDefaultClickHandler);
-          currentPinHandler.addEventListener('click', preventDefaultClickHandler);
 
-          // перемещаю сюда события ранее находящихся при событии клика по главной метке
-          map.classList.remove('map--faded');
-          renderButton();
-          form.classList.remove('ad-form--disabled');
-          disableFormControl();
-          disableFiltersControl();
-          currentPinHandler.removeEventListener('mousedown', currentPinHandler);
-          currentPinHandler.addEventListener('click', currentPinHandler);
-        };
+      // перемещаю сюда события ранее находящихся при событии клика по главной метке
+      // условие <if> помогает отрисовки пинов быть только единожды,
+      // и на этом генерация пинов приостанавливается.
+      if (map.classList.contains('map--faded')) {
+        map.classList.remove('map--faded');
+        renderButton();
+        form.classList.remove('ad-form--disabled');
+        setElementDisabled(allFormFieldsets, false);
+        setElementDisabled(filtersElements, false);
       }
     };
 
     document.addEventListener('mousemove', currentPinMouseMoveHandler);
     document.addEventListener('mouseup', currentPinMouseUpHandler);
   });
-  // currentPin.addEventListener('mousedown', currentPinMouseDownHandler);
-
-  // ------------------------------------------------------------------------------------------
 
   // событие при клике на главную метку пина
   var getCoordinatePin = function () {
@@ -162,38 +156,16 @@ var movingCurrentPin = function () {
   getCoordinatePin();
   currentPin.addEventListener('mouseup', getCoordinatePin);
 
-
-  // циклом задаю недоступность фиелдсетов формы
-  var enableFormControl = function () {
-    for (var j = 0; j < allFieldsetForm.length; j++) {
-      allFieldsetForm[j].disabled = 'disabled';
+  // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
+  var setElementDisabled = function (elements, isDisabled) {
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].disabled = isDisabled;
     }
   };
 
-  enableFormControl();
-
-  // с помощью функции определяю удаляю добавленные ранее disabled
-  var disableFormControl = function () {
-    for (var i = 0; i < allFieldsetForm.length; i++) {
-      allFieldsetForm[i].disabled = '';
-    }
-  };
-
-  // тоже самое проделываю с фильтрами
-  var enableFiltersControl = function () {
-    for (var j = 0; j < filtersChild.length; j++) {
-      filtersChild[j].disabled = 'disabled';
-    }
-  };
-
-  enableFiltersControl();
-
-  var disableFiltersControl = function () {
-    for (var i = 0; i < filtersChild.length; i++) {
-      filtersChild[i].disabled = '';
-    }
-  };
-// -----------------------------
+  // определяю универсальную функцию на каждый нужный набор классов
+  setElementDisabled(allFormFieldsets, true);
+  setElementDisabled(filtersElements, true);
 };
 
 movingCurrentPin();
@@ -226,7 +198,6 @@ titleField.addEventListener('invalid', function () {
 
 
 // находим поле select (выпад. список) по id-шнику
-
 buildingType.addEventListener('change', function (evt) {
   var target = evt.currentTarget;
   var selected = target.selectedOptions[0];
@@ -264,7 +235,6 @@ var synchronizationDate = function (from, to) {
   }
 };
 
-
 // вешаем полученные функции на события отслеживания:
 // Сначала вешаю событие на 1-е поле (время заезда)
 
@@ -276,4 +246,3 @@ timeIn.addEventListener('change', function () {
 timeOut.addEventListener('change', function () {
   synchronizationDate(timeOut, timeIn);
 });
-
