@@ -86,6 +86,7 @@ var renderButton = function () {
 
 form.action = 'https://js.dump.academy/keksobooking';
 
+// ------------------------------------------------------------------------------------------
 
 // перемещение метки, события на главной метке.
 
@@ -155,6 +156,7 @@ form.action = 'https://js.dump.academy/keksobooking';
   // currentPin.addEventListener('mousedown', currentPinMouseDownHandler);
 });
 
+// ------------------------------------------------------------------------------------------
 
 // событие при клике на главную метку пина
 var getCoordinatePin = function () {
