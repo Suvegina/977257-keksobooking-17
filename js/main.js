@@ -89,8 +89,7 @@ form.action = 'https://js.dump.academy/keksobooking';
 // ------------------------------------------------------------------------------------------
 
 // перемещение метки, события на главной метке.
-
-(function () {
+var movingCurrentPin = function () {
 
   // var map = document.querySelector('.map');
   var currentPinHandler = map.querySelector('.map__pin--main');
@@ -102,7 +101,7 @@ form.action = 'https://js.dump.academy/keksobooking';
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
-    };    
+    };
 
     var dragged = false;
 
@@ -116,9 +115,9 @@ form.action = 'https://js.dump.academy/keksobooking';
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-  // При каждом движении мыши нам нужно обновлять
-  // смещение относительно первоначальной точки, чтобы диалог
-  // смещался на необходимую величину.
+      // При каждом движении мыши нам нужно обновлять
+      // смещение относительно первоначальной точки, чтобы диалог
+      // смещался на необходимую величину.
       map.style.top = (map.offsetTop - shift.y) + 'px';
       map.style.left = (map.offsetLeft - shift.x) + 'px';
     };
@@ -129,7 +128,7 @@ form.action = 'https://js.dump.academy/keksobooking';
       document.removeEventListener('mousemove', currentPinMouseMoveHandler);
       document.removeEventListener('mouseup', currentPinMouseUpHandler);
       if (dragged) {
-        var preventDefaultClickHandler = function(evt) {
+        var preventDefaultClickHandler = function () {
           evt.preventDefault();
           currentPinHandler.removeEventListener('click', preventDefaultClickHandler);
           currentPinHandler.addEventListener('click', preventDefaultClickHandler);
@@ -150,7 +149,8 @@ form.action = 'https://js.dump.academy/keksobooking';
     document.addEventListener('mouseup', currentPinMouseUpHandler);
   });
   // currentPin.addEventListener('mousedown', currentPinMouseDownHandler);
-});
+
+movingCurrentPin();
 
 // ------------------------------------------------------------------------------------------
 
@@ -196,6 +196,7 @@ var disableFiltersControl = function () {
   }
 };
 
+};
 // // На перспективу, рабочий код, для того чтобы изменять положение метки
 // // с помощью написания координат в поле input:
 
