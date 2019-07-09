@@ -112,15 +112,27 @@ var movingCurrentPin = function () {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
       };
+
       startCoords = {
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
+
       // При каждом движении мыши нам нужно обновлять
       // смещение относительно первоначальной точки, чтобы диалог
       // смещался на необходимую величину.
-      currentPin.style.top = (currentPin.offsetTop - shift.y) + 'px';
-      currentPin.style.left = (currentPin.offsetLeft - shift.x) + 'px';
+
+      var newY = currentPin.offsetTop - shift.y;
+      // задаем условие, при котором метка не будет выходить за области экрана по Y
+      if (130 < newY && newY < 630) {
+        currentPin.style.top = (currentPin.offsetTop - shift.y) + 'px';
+      };
+
+      var newX = currentPin.offsetLeft - shift.x;
+      // задаем условие, при котором метка не будет выходить за области экрана по X
+      if (10 < newX && newX < 1120) {
+        currentPin.style.left = (currentPin.offsetLeft - shift.x) + 'px';
+      };
     };
 
     var currentPinMouseUpHandler = function (upEvt) {
@@ -138,6 +150,7 @@ var movingCurrentPin = function () {
         form.classList.remove('ad-form--disabled');
         setElementDisabled(allFormFieldsets, false);
         setElementDisabled(filtersElements, false);
+
       }
     };
 
@@ -145,7 +158,7 @@ var movingCurrentPin = function () {
     document.addEventListener('mouseup', currentPinMouseUpHandler);
   });
 
-  // событие при клике на главную метку пина
+  //  замена в поле адреса координаты пина. Далее вешаем на событие
   var getCoordinatePin = function () {
     var x = currentPin.style.left.replace('px', '');
     var y = currentPin.style.top.replace('px', '');
