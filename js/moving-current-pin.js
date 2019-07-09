@@ -12,7 +12,7 @@
 //     var startCoords = {
 //       x: evt.clientX,
 //       y: evt.clientY
-//     };    
+//     };
 
 //     var dragged = false;
 
@@ -23,12 +23,12 @@
 //         x: startCoords.x - moveEvt.clientX,
 //         y: startCoords.y - moveEvt.clientY
 //       };
-      
+
 //       startCoords = {
 //         x: moveEvt.clientX,
 //         y: moveEvt.clientY
 //       };
-    
+
 //     // При каждом движении мыши нам нужно обновлять
 //     // смещение относительно первоначальной точки, чтобы диалог
 //     // смещался на необходимую величину.
@@ -41,7 +41,6 @@
 
 //       document.removeEventListener('mousemove', currentPinMouseMoveHandler);
 //       document.removeEventListener('mouseup', currentPinMouseUpHandler);
-      
 //       if (dragged) {
 //         var preventDefaultClickHandler = function (evt) {
 //           evt.preventDefault();
