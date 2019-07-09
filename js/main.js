@@ -150,53 +150,53 @@ var movingCurrentPin = function () {
   });
   // currentPin.addEventListener('mousedown', currentPinMouseDownHandler);
 
+  // ------------------------------------------------------------------------------------------
+
+  // событие при клике на главную метку пина
+  var getCoordinatePin = function () {
+    var x = currentPin.style.left.replace('px', '');
+    var y = currentPin.style.top.replace('px', '');
+    address.value = x + ', ' + y;
+  };
+
+  getCoordinatePin();
+  currentPin.addEventListener('mouseup', getCoordinatePin);
+
+
+  // циклом задаю недоступность фиелдсетов формы
+  var enableFormControl = function () {
+    for (var j = 0; j < allFieldsetForm.length; j++) {
+      allFieldsetForm[j].disabled = 'disabled';
+    }
+  };
+
+  enableFormControl();
+
+  // с помощью функции определяю удаляю добавленные ранее disabled
+  var disableFormControl = function () {
+    for (var i = 0; i < allFieldsetForm.length; i++) {
+      allFieldsetForm[i].disabled = '';
+    }
+  };
+
+  // тоже самое проделываю с фильтрами
+  var enableFiltersControl = function () {
+    for (var j = 0; j < filtersChild.length; j++) {
+      filtersChild[j].disabled = 'disabled';
+    }
+  };
+
+  enableFiltersControl();
+
+  var disableFiltersControl = function () {
+    for (var i = 0; i < filtersChild.length; i++) {
+      filtersChild[i].disabled = '';
+    }
+  };
+// -----------------------------
+};
+
 movingCurrentPin();
-
-// ------------------------------------------------------------------------------------------
-
-// событие при клике на главную метку пина
-var getCoordinatePin = function () {
-  var x = currentPin.style.left.replace('px', '');
-  var y = currentPin.style.top.replace('px', '');
-  address.value = x + ', ' + y;
-};
-
-getCoordinatePin();
-currentPin.addEventListener('mouseup', getCoordinatePin);
-
-
-// циклом задаю недоступность фиелдсетов формы
-var enableFormControl = function () {
-  for (var j = 0; j < allFieldsetForm.length; j++) {
-    allFieldsetForm[j].disabled = 'disabled';
-  }
-};
-
-enableFormControl();
-
-// с помощью функции определяю удаляю добавленные ранее disabled
-var disableFormControl = function () {
-  for (var i = 0; i < allFieldsetForm.length; i++) {
-    allFieldsetForm[i].disabled = '';
-  }
-};
-
-// тоже самое проделываю с фильтрами
-var enableFiltersControl = function () {
-  for (var j = 0; j < filtersChild.length; j++) {
-    filtersChild[j].disabled = 'disabled';
-  }
-};
-
-enableFiltersControl();
-
-var disableFiltersControl = function () {
-  for (var i = 0; i < filtersChild.length; i++) {
-    filtersChild[i].disabled = '';
-  }
-};
-
-};
 // // На перспективу, рабочий код, для того чтобы изменять положение метки
 // // с помощью написания координат в поле input:
 
