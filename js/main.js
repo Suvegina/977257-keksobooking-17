@@ -92,7 +92,7 @@ form.action = 'https://js.dump.academy/keksobooking';
 
 (function () {
 
-  var map = document.querySelector('.map');
+  // var map = document.querySelector('.map');
   var currentPinHandler = map.querySelector('.map__pin--main');
   // var currentPin = map.querySelector('.map__pin--main');
 
@@ -108,35 +108,31 @@ form.action = 'https://js.dump.academy/keksobooking';
 
     var currentPinMouseMoveHandler = function (moveEvt) {
       moveEvt.preventDefault();
-
       var shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
       };
-      
       startCoords = {
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-    
-    // При каждом движении мыши нам нужно обновлять
-    // смещение относительно первоначальной точки, чтобы диалог
-    // смещался на необходимую величину.
+  // При каждом движении мыши нам нужно обновлять
+  // смещение относительно первоначальной точки, чтобы диалог
+  // смещался на необходимую величину.
       map.style.top = (map.offsetTop - shift.y) + 'px';
       map.style.left = (map.offsetLeft - shift.x) + 'px';
     };
 
-    var currentPinMouseUpHandler = function(upEvt) {
+    var currentPinMouseUpHandler = function (upEvt) {
       upEvt.preventDefault();
 
       document.removeEventListener('mousemove', currentPinMouseMoveHandler);
       document.removeEventListener('mouseup', currentPinMouseUpHandler);
-      
       if (dragged) {
-        var preventDefaultClickHandler = function (evt) {
+        var preventDefaultClickHandler = function(evt) {
           evt.preventDefault();
           currentPinHandler.removeEventListener('click', preventDefaultClickHandler);
-          currentPinHandler.addEventListener('click', preventDefaultClickHandler)
+          currentPinHandler.addEventListener('click', preventDefaultClickHandler);
 
           // перемещаю сюда события ранее находящихся при событии клика по главной метке
           map.classList.remove('map--faded');
