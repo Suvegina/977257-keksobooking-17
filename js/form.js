@@ -1,8 +1,17 @@
 'use strict'; // form.js — модуль, который работает с формой объявления.
 
 (function () {
+
+  var form = document.querySelector('.ad-form');
+  var buildingType = form.querySelector('#type');
+
   // Поле «Заголовок объявления»
   var titleField = form.querySelector('.ad-form__element');
+  var nightSelect = form.querySelector('#price');
+
+  // определяем нахождение полей select по id-шникам
+  var timeIn = form.querySelector('#timein');
+  var timeOut = form.querySelector('#timeout');
 
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
@@ -65,4 +74,4 @@
   timeOut.addEventListener('change', function () {
     synchronizationDate(timeOut, timeIn);
   });
-}) ();
+})();
