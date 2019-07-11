@@ -8,6 +8,7 @@
   var form = document.querySelector('.ad-form');
   var buildingType = form.querySelector('#type');
   var allFormFieldsets = form.querySelectorAll('fieldset');
+  var address = document.querySelector('#address');
 
   // Поле «Заголовок объявления»
   var titleField = form.querySelector('.ad-form__element');
@@ -89,12 +90,12 @@
   //  замена в поле адреса координаты пина. Далее вешаем на событие
   // parseInt преобразование строки в целое число
   var updateAddress = function () {
-    var x = parseInt(currentPin.style.left.replace('px', '')) + PIN_POSITION_X;
-    var y = parseInt(currentPin.style.top.replace('px', '')) + PIN_POSITION_Y;
+    var x = parseInt(currentPin.style.left.replace('px', ''), 10) + PIN_POSITION_X;
+    var y = parseInt(currentPin.style.top.replace('px', ''), 10) + PIN_POSITION_Y;
     address.value = x + ', ' + y;
   };
 
-  window.updateAddress = updateAddress();
+  window.updateAddress = updateAddress;
   currentPin.addEventListener('mouseup', window.updateAddress);
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре

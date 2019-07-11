@@ -6,7 +6,6 @@
 (function () {
 
   var pins = [];
-  var offerTypes = ['palace', 'flat', 'house', 'bungalo'];
   var mapPin = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -17,8 +16,6 @@
   // смещение пинов относительно нужной метки
   var PIN_POSITION_X = 20;
   var PIN_POSITION_Y = 62;
-
-  var form = document.querySelector('.ad-form');
 
   // функция, с помощью которой мы клонируем элемент из Template шаблона в разметке
   var makeButton = function (pin) {
@@ -40,5 +37,5 @@
     }
   };
 
-   window.renderButton = renderButton;
+  window.renderButton = renderButton;
 })();

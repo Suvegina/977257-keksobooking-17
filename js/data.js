@@ -4,7 +4,6 @@
   // var form = document.querySelector('.ad-form');
   // form.action = 'https://js.dump.academy/keksobooking';
 
-  var pins = [];
   var offerTypes = ['palace', 'flat', 'house', 'bungalo'];
   var mapPin = document.querySelector('.map__pins');
 
@@ -13,10 +12,6 @@
   var minRAndomHeight = 130;
   var maxRAndomHeight = 630;
   var MIN_WIDTH = 0;
-
-  // смещение пинов относительно нужной метки
-  var PIN_POSITION_X = 20;
-  var PIN_POSITION_Y = 62;
 
 
   // Находим случайный индекс массива
