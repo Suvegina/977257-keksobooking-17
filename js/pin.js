@@ -9,36 +9,16 @@
   var offerTypes = ['palace', 'flat', 'house', 'bungalo'];
   var mapPin = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-  var MIN_WIDTH = 0;
+
 
   // Проверка размера ширины окна (класса)
   // var MAX_WIDTH = mapPin.offsetWidth;
-
-  // Мин и макс. положение location по Y в цикле
-  var minRAndomHeight = 130;
-  var maxRAndomHeight = 630;
 
   // смещение пинов относительно нужной метки
   var PIN_POSITION_X = 20;
   var PIN_POSITION_Y = 62;
 
   var form = document.querySelector('.ad-form');
-
-  // Находим случайный индекс массива
-  // Для рандомного подбора параметров 'offerTypes'
-  var getRandomItem = function (arr) {
-    var index = Math.floor(Math.random() * arr.length);
-    return arr[index];
-  };
-
-  // Находим случайное число для координат
-  var getRandomNumber = function (min, max) {
-    var rand = min + Math.random() * (max - min + 1);
-    rand = Math.round(rand);
-
-    return rand;
-  };
-
 
   // функция, с помощью которой мы клонируем элемент из Template шаблона в разметке
   var makeButton = function (pin) {
@@ -50,27 +30,10 @@
     return element;
   };
 
-  // функция для генерации пинов
-  var generatePin = function (index) {
-    var newPin = {
-      author: {
-        avatar: 'img/avatars/user0' + (index + 1) + '.png'
-      },
-      offer: {
-        type: getRandomItem(offerTypes)
-      },
-      location: {
-        x: getRandomNumber(MIN_WIDTH, mapPin.offsetWidth),
-        y: getRandomNumber(minRAndomHeight, maxRAndomHeight)
-      }
-    };
-    return newPin;
-  };
-
   // функция циклического дублирования пинов
   var renderButton = function () {
     for (var i = 0; i < 8; i++) {
-      var pin = generatePin(i);
+      var pin = window.data.generatePin(i);
 
       mapPin.appendChild(makeButton(pin));
       pins.push(pin);

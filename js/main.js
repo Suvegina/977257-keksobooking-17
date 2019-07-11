@@ -151,40 +151,23 @@ var movingCurrentPin = function () {
         form.classList.remove('ad-form--disabled');
         setElementDisabled(allFormFieldsets, false);
         setElementDisabled(filtersElements, false);
-        // getPinCoordinate();
+        updateAddress();
       }
     };
-
-    // ------------ Здесь нужно изменить положение метки относительно его собственных координат ------------
-
-    // var getPinCoordinate = function (pin) {
-    //   var elementPin = currentPin;
-    //   elementPin.style.left = currentPin.location.x - PIN_POSITION_X + 'px';
-    //   elementPin.style.top = currentPin.location.y - PIN_POSITION_Y + 'px';
-
-    //   return elementPin;
-    // };
-
-    // -------------------------------------------------------------------------------------
-
-    // var getPinCoordinate = function () {
-    //   currentPin.children[0].style = {top: '87px', left: '32px'};
-    // };
-
 
     document.addEventListener('mousemove', currentPinMouseMoveHandler);
     document.addEventListener('mouseup', currentPinMouseUpHandler);
   });
 
   //  замена в поле адреса координаты пина. Далее вешаем на событие
-  var getCoordinatePin = function () {
-    var x = currentPin.style.left.replace('px', '');
-    var y = currentPin.style.top.replace('px', '');
+  var updateAddress = function () {
+    var x = parseInt(currentPin.style.left.replace('px', '')) + PIN_POSITION_X;
+    var y = parseInt(currentPin.style.top.replace('px', '')) + PIN_POSITION_Y;
     address.value = x + ', ' + y;
   };
 
-  getCoordinatePin();
-  currentPin.addEventListener('mouseup', getCoordinatePin);
+  updateAddress();
+  currentPin.addEventListener('mouseup', updateAddress);
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
   var setElementDisabled = function (elements, isDisabled) {

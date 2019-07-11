@@ -1,40 +1,50 @@
 'use strict'; // data.js - модуль, который создаёт данные
 
 (function () {
-  // var pins = [];
-  // var offerTypes = ['palace', 'flat', 'house', 'bungalo'];
-  // var mapPin = document.querySelector('.map__pins');
-  // var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-  // var MIN_WIDTH = 0;
-  // // Проверка размера ширины окна (класса)
-  // // var MAX_WIDTH = mapPin.offsetWidth;
+  // var form = document.querySelector('.ad-form');
+  // form.action = 'https://js.dump.academy/keksobooking';
 
-  // // Мин и макс. положение location по Y в цикле
-  // var minRAndomHeight = 130;
-  // var maxRAndomHeight = 630;
+  // Мин и макс. положение location по Y в цикле
+  var minRAndomHeight = 130;
+  var maxRAndomHeight = 630;
+  var MIN_WIDTH = 0;
 
-  // // смещение пинов относительно нужной метки
-  // var PIN_POSITION_X = 20;
-  // var PIN_POSITION_Y = 62;
+  // Находим случайный индекс массива
+  // Для рандомного подбора параметров 'offerTypes'
+  var getRandomItem = function (arr) {
+    var index = Math.floor(Math.random() * arr.length);
+    return arr[index];
+  };
 
-  var form = document.querySelector('.ad-form');
-  form.action = 'https://js.dump.academy/keksobooking';
+  // Находим случайное число для координат
+  var getRandomNumber = function (min, max) {
+    var rand = min + Math.random() * (max - min + 1);
+    rand = Math.round(rand);
 
-  // var allFormFieldsets = form.querySelectorAll('fieldset');
-  // var address = document.querySelector('#address');
+    return rand;
+  };
 
-  // var filtersElements = document.querySelector('.map__filters').children;
-  // // var filtersChild = filters.children;
+  // функция для генерации пинов
+  var generatePin = function (index) {
+    var newPin = {
+      author: {
+        avatar: 'img/avatars/user0' + (index + 1) + '.png'
+      },
+      offer: {
+        type: getRandomItem(offerTypes)
+      },
+      location: {
+        x: getRandomNumber(MIN_WIDTH, mapPin.offsetWidth),
+        y: getRandomNumber(minRAndomHeight, maxRAndomHeight)
+      }
+    };
+    return newPin;
+  };
 
-  // var map = document.querySelector('.map');
-  // var currentPin = document.querySelector('.map__pin--main');
-
-  // var buildingType = form.querySelector('#type');
-  // var nightSelect = form.querySelector('#price');
-
-  // // определяем нахождение полей select по id-шникам
-  // var timeIn = form.querySelector('#timein');
-  // var timeOut = form.querySelector('#timeout');
+  // создаем область видимости для нескольких объектов
+  window.data = {
+    generatePin: generatePin,
+  };
 
   // добавляем адрес отправки формы
 })();
