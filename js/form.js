@@ -2,8 +2,12 @@
 
 (function () {
 
+  var map = document.querySelector('.map');
+  var currentPin = map.querySelector('.map__pin--main');
+
   var form = document.querySelector('.ad-form');
   var buildingType = form.querySelector('#type');
+  var allFormFieldsets = form.querySelectorAll('fieldset');
 
   // Поле «Заголовок объявления»
   var titleField = form.querySelector('.ad-form__element');
@@ -12,6 +16,13 @@
   // определяем нахождение полей select по id-шникам
   var timeIn = form.querySelector('#timein');
   var timeOut = form.querySelector('#timeout');
+
+  // смещение пинов относительно нужной метки
+  var PIN_POSITION_X = 20;
+  var PIN_POSITION_Y = 62;
+
+  var filtersElements = document.querySelector('.map__filters').children;
+
 
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
@@ -74,4 +85,27 @@
   timeOut.addEventListener('change', function () {
     synchronizationDate(timeOut, timeIn);
   });
+
+  //  замена в поле адреса координаты пина. Далее вешаем на событие
+  // parseInt преобразование строки в целое число
+  var updateAddress = function () {
+    var x = parseInt(currentPin.style.left.replace('px', '')) + PIN_POSITION_X;
+    var y = parseInt(currentPin.style.top.replace('px', '')) + PIN_POSITION_Y;
+    address.value = x + ', ' + y;
+  };
+
+  window.updateAddress = updateAddress();
+  currentPin.addEventListener('mouseup', window.updateAddress);
+
+  // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
+  var setElementDisabled = function (elements, isDisabled) {
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].disabled = isDisabled;
+    }
+  };
+
+  window.setElementDisabled = setElementDisabled;
+  // определяю универсальную функцию на каждый нужный набор классов
+  window.setElementDisabled(allFormFieldsets, true);
+  window.setElementDisabled(filtersElements, true);
 })();

@@ -39,4 +39,6 @@
       pins.push(pin);
     }
   };
+
+   window.renderButton = renderButton;
 })();
