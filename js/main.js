@@ -141,6 +141,7 @@ var movingCurrentPin = function () {
       document.removeEventListener('mousemove', currentPinMouseMoveHandler);
       document.removeEventListener('mouseup', currentPinMouseUpHandler);
 
+
       // перемещаю сюда события ранее находящихся при событии клика по главной метке
       // условие <if> помогает отрисовки пинов быть только единожды,
       // и на этом генерация пинов приостанавливается.
@@ -150,32 +151,25 @@ var movingCurrentPin = function () {
         form.classList.remove('ad-form--disabled');
         setElementDisabled(allFormFieldsets, false);
         setElementDisabled(filtersElements, false);
-        getPinCoordinate();
+        // getPinCoordinate();
       }
     };
 
-    var getPinCoordinate = function (pin) {
-      var elementPin = currentPin;
-      elementPin.style.left = currentPin.location.x - PIN_POSITION_X + 'px';
-      elementPin.style.top = currentPin.location.y - PIN_POSITION_Y + 'px';
+    // ------------ Здесь нужно изменить положение метки относительно его собственных координат ------------
 
-      return elementPin;
-    };
+    // var getPinCoordinate = function (pin) {
+    //   var elementPin = currentPin;
+    //   elementPin.style.left = currentPin.location.x - PIN_POSITION_X + 'px';
+    //   elementPin.style.top = currentPin.location.y - PIN_POSITION_Y + 'px';
+
+    //   return elementPin;
+    // };
+
+    // -------------------------------------------------------------------------------------
 
     // var getPinCoordinate = function () {
     //   currentPin.children[0].style = {top: '87px', left: '32px'};
     // };
-
-    // var makeButton = function (pin) {
-    //   var element = pinTemplate.cloneNode(true);
-    //   element.style.left = pin.location.x - PIN_POSITION_X + 'px';
-    //   element.style.top = pin.location.y - PIN_POSITION_Y + 'px';
-    //   element.querySelector('img').src = pin.author.avatar;
-    
-    //   return element;
-    // };    
-
-
 
 
     document.addEventListener('mousemove', currentPinMouseMoveHandler);
