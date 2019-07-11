@@ -10,6 +10,7 @@
   var mapPin = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var MIN_WIDTH = 0;
+
   // Проверка размера ширины окна (класса)
   // var MAX_WIDTH = mapPin.offsetWidth;
 
@@ -22,21 +23,21 @@
   var PIN_POSITION_Y = 62;
 
   var form = document.querySelector('.ad-form');
-  var allFormFieldsets = form.querySelectorAll('fieldset');
-  var address = document.querySelector('#address');
 
-  var filtersElements = document.querySelector('.map__filters').children;
-  // var filtersChild = filters.children;
+  // Находим случайный индекс массива
+  // Для рандомного подбора параметров 'offerTypes'
+  var getRandomItem = function (arr) {
+    var index = Math.floor(Math.random() * arr.length);
+    return arr[index];
+  };
 
-  var map = document.querySelector('.map');
-  var currentPin = document.querySelector('.map__pin--main');
+  // Находим случайное число для координат
+  var getRandomNumber = function (min, max) {
+    var rand = min + Math.random() * (max - min + 1);
+    rand = Math.round(rand);
 
-  var buildingType = form.querySelector('#type');
-  var nightSelect = form.querySelector('#price');
-
-  // определяем нахождение полей select по id-шникам
-  var timeIn = form.querySelector('#timein');
-  var timeOut = form.querySelector('#timeout');
+    return rand;
+  };
 
 
   // функция, с помощью которой мы клонируем элемент из Template шаблона в разметке
