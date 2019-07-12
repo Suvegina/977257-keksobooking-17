@@ -124,15 +124,15 @@ var movingCurrentPin = function () {
 
       var newY = currentPin.offsetTop - shift.y;
       // задаем условие, при котором метка не будет выходить за области экрана по Y
-      if (130 < newY && newY < 630) {
+      if (newY > 130 && newY < 630) {
         currentPin.style.top = (currentPin.offsetTop - shift.y) + 'px';
-      };
+      }
 
       var newX = currentPin.offsetLeft - shift.x;
       // задаем условие, при котором метка не будет выходить за области экрана по X
-      if (10 < newX && newX < 1120) {
+      if (newX > 10 && newX < 1120) {
         currentPin.style.left = (currentPin.offsetLeft - shift.x) + 'px';
-      };
+      }
     };
 
     var currentPinMouseUpHandler = function (upEvt) {
@@ -140,6 +140,7 @@ var movingCurrentPin = function () {
 
       document.removeEventListener('mousemove', currentPinMouseMoveHandler);
       document.removeEventListener('mouseup', currentPinMouseUpHandler);
+
 
       // перемещаю сюда события ранее находящихся при событии клика по главной метке
       // условие <if> помогает отрисовки пинов быть только единожды,
@@ -150,7 +151,7 @@ var movingCurrentPin = function () {
         form.classList.remove('ad-form--disabled');
         setElementDisabled(allFormFieldsets, false);
         setElementDisabled(filtersElements, false);
-
+        updateAddress();
       }
     };
 
@@ -159,14 +160,14 @@ var movingCurrentPin = function () {
   });
 
   //  замена в поле адреса координаты пина. Далее вешаем на событие
-  var getCoordinatePin = function () {
-    var x = currentPin.style.left.replace('px', '');
-    var y = currentPin.style.top.replace('px', '');
+  var updateAddress = function () {
+    var x = parseInt(currentPin.style.left.replace('px', ''), 10) + PIN_POSITION_X;
+    var y = parseInt(currentPin.style.top.replace('px', ''), 10) + PIN_POSITION_Y;
     address.value = x + ', ' + y;
   };
 
-  getCoordinatePin();
-  currentPin.addEventListener('mouseup', getCoordinatePin);
+  updateAddress();
+  currentPin.addEventListener('mouseup', updateAddress);
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
   var setElementDisabled = function (elements, isDisabled) {
