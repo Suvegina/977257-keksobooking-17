@@ -95,8 +95,8 @@
     address.value = x + ', ' + y;
   };
 
-  window.updateAddress = updateAddress;
-  currentPin.addEventListener('mouseup', window.updateAddress);
+  // window.updateAddress = updateAddress;
+  currentPin.addEventListener('mouseup', updateAddress);
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
   var setElementDisabled = function (elements, isDisabled) {
@@ -105,8 +105,14 @@
     }
   };
 
-  window.setElementDisabled = setElementDisabled;
+  window.form = {
+    updateAddress: updateAddress(),
+    setElementDisabled: setElementDisabled
+  };
+
+  // window.setElementDisabled = setElementDisabled;
+
   // определяю универсальную функцию на каждый нужный набор классов
-  window.setElementDisabled(allFormFieldsets, true);
-  window.setElementDisabled(filtersElements, true);
+  window.form.setElementDisabled(allFormFieldsets, true);
+  window.form.setElementDisabled(filtersElements, true);
 })();

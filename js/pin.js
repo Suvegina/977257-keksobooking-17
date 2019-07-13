@@ -37,5 +37,8 @@
     }
   };
 
-  window.renderButton = renderButton;
+  // window.renderButton = renderButton;
+  window.pin = {
+    renderButton: renderButton
+  }
 })();

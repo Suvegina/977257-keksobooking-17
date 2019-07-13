@@ -68,12 +68,12 @@ var movingCurrentPin = function () {
       // и на этом генерация пинов приостанавливается.
       if (map.classList.contains('map--faded')) {
         map.classList.remove('map--faded');
-        window.renderButton();
+        window.pin.renderButton();
         form.classList.remove('ad-form--disabled');
         // вызываю функции генерации недоступных частей формы
-        window.setElementDisabled(allFormFieldsets, false);
-        window.setElementDisabled(filtersElements, false);
-        window.updateAddress();
+        window.form.setElementDisabled(allFormFieldsets, false);
+        window.form.setElementDisabled(filtersElements, false);
+        window.form.updateAddress;
       }
     };
 
@@ -82,7 +82,7 @@ var movingCurrentPin = function () {
   });
 
   // вызываю функци с синхронизацией адреса (положение главного пина)
-  window.updateAddress();
+  // window.form.updateAddress();
 };
 
 movingCurrentPin();

@@ -48,7 +48,7 @@
 
   // создаем область видимости для нескольких объектов
   window.data = {
-    generatePin: generatePin,
+    generatePin: generatePin
   };
 
   // или вызываем одну функцию в глобальную область видимости
