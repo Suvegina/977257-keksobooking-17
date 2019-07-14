@@ -40,5 +40,5 @@
   // window.renderButton = renderButton;
   window.pin = {
     renderButton: renderButton
-  }
+  };
 })();

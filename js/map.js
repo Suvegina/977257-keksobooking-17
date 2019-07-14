@@ -73,7 +73,7 @@ var movingCurrentPin = function () {
         // вызываю функции генерации недоступных частей формы
         window.form.setElementDisabled(allFormFieldsets, false);
         window.form.setElementDisabled(filtersElements, false);
-        window.form.updateAddress;
+        // window.form.updateAddress;
       }
     };
 
