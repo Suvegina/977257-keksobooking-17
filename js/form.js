@@ -115,4 +115,28 @@
   // определяю универсальную функцию на каждый нужный набор классов
   window.form.setElementDisabled(allFormFieldsets, true);
   window.form.setElementDisabled(filtersElements, true);
+
+  // навешиваю событие при клике на кнопку 'Отправить'
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.upload(new FormData(form), function (response) {
+      // проверяю на работоспособность отображения окна
+      // alert(response);
+
+      // здесь я возвращаю действия на круги своя ... до того момента,
+      // когда вся форма имела изначальное состояние ...
+      // указываю здесь все по порядку с конца и в начало
+      // (в функции currentPinMouseUpHandler в файле map.js)
+      window.form.setElementDisabled(allFormFieldsets, true);
+      window.form.setElementDisabled(filtersElements, true);
+      form.classList.add('ad-form--disabled');
+      // window.pin.renderButton();
+      map.classList.add('map--faded');
+
+      // Если при отправке данных произошла ошибка запроса, нужно показать
+      // соответствующее сообщение в блоке main, используя блок #error из шаблона template
+    }, function(text) {
+      errorHandler(text);
+    });
+  });
 })();
