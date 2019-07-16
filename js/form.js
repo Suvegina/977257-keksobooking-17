@@ -110,7 +110,7 @@
     setElementDisabled: setElementDisabled
   };
 
-  // window.setElementDisabled = setElementDisabled;
+  // window.form.setElementDisabled = setElementDisabled;
 
   // определяю универсальную функцию на каждый нужный набор классов
   window.form.setElementDisabled(allFormFieldsets, true);
@@ -136,7 +136,8 @@
       // Если при отправке данных произошла ошибка запроса, нужно показать
       // соответствующее сообщение в блоке main, используя блок #error из шаблона template
     }, function(text) {
-      errorHandler(text);
+      // window.notifiable.errorHandler(text);
+      window.notifiable.notifiableHandler(errorTemplate, text);
     });
   });
 })();
