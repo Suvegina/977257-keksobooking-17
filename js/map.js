@@ -80,9 +80,6 @@ var movingCurrentPin = function () {
     document.addEventListener('mousemove', currentPinMouseMoveHandler);
     document.addEventListener('mouseup', currentPinMouseUpHandler);
   });
-
-  // вызываю функци с синхронизацией адреса (положение главного пина)
-  // window.form.updateAddress();
 };
 
 movingCurrentPin();
