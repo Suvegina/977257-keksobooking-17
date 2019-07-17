@@ -25,7 +25,7 @@
   var filtersElements = document.querySelector('.map__filters').children;
 
   // текстовое содержание при отправки формы
-  var successTemplate = document.querySelector('#success').content;
+  // var successTemplate = document.querySelector('#success').content;
   var errorTemplate = document.querySelector('#error').content;
   // console.log(successTemplate);
   // console.log(errorTemplate);
