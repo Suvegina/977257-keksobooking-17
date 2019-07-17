@@ -25,9 +25,10 @@
   var filtersElements = document.querySelector('.map__filters').children;
 
   // текстовое содержание при отправки формы
-  var successTemplate = document.querySelector('#success').content.querySelector('main');
-  var errorTemplate = document.querySelector('#error').content.querySelector('main');
-
+  var successTemplate = document.querySelector('#success').content;
+  var errorTemplate = document.querySelector('#error').content;
+console.log(successTemplate);
+console.log(errorTemplate);
 
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
