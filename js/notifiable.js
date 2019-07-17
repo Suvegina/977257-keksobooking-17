@@ -5,8 +5,8 @@
 
 (function () {
 
-  var successTemplate = document.querySelector('#success').content.querySelector('main');
-  var errorTemplate = document.querySelector('#error').content.querySelector('main');
+  // var successTemplate = document.querySelector('#success').content.querySelector('main');
+  // var errorTemplate = document.querySelector('#error').content.querySelector('main');
 
   // var successHandler = function(successMessage) {
   //   // var node = document.createElement('div');
@@ -57,6 +57,6 @@
 
   window.notifiable = {
     notifiableHandler: notifiableHandler
-  }
+  };
 
 })();

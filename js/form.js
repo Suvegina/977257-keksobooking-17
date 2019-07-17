@@ -27,8 +27,8 @@
   // текстовое содержание при отправки формы
   var successTemplate = document.querySelector('#success').content;
   var errorTemplate = document.querySelector('#error').content;
-console.log(successTemplate);
-console.log(errorTemplate);
+  // console.log(successTemplate);
+  // console.log(errorTemplate);
 
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
@@ -124,9 +124,9 @@ console.log(errorTemplate);
   // навешиваю событие при клике на кнопку 'Отправить'
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.upload(new FormData(form), function (response) {
+    window.upload(new FormData(form), function () {
       // проверяю на работоспособность отображения окна
-      alert(response);
+      // alert(response);
 
       // здесь я возвращаю действия на круги своя ... до того момента,
       // когда вся форма имела изначальное состояние ...

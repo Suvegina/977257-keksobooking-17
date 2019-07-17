@@ -33,7 +33,7 @@
     // window.form.updateAddress();
     window.load(function (pins) {
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < 7; i++) {
+      for (var i = 0; i < pins.length; i++) {
         fragment.appendChild(makeButton(pins[i]));
       }
       mapPin.appendChild(fragment);
