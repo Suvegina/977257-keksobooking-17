@@ -25,8 +25,8 @@
   var filtersElements = document.querySelector('.map__filters').children;
 
   // текстовое содержание при отправки формы
-  // var successTemplate = document.querySelector('#success').content;
-  var errorTemplate = document.querySelector('#error').content;
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   // console.log(successTemplate);
   // console.log(errorTemplate);
 
@@ -60,6 +60,25 @@
     }
   });
 
+  var roomSelect = document.querySelector('#room_number');
+  var capacitySelect = document.querySelector('#capacity');
+
+  roomSelect.addEventListener('change', function (evt) {
+    var target = evt.currentTarget;
+    var selected = target.selectedOptions[0];
+    var minLength = selected.getAttribute('minlength');
+
+    capacitySelect.setAttribute('min', minLength);
+    capacitySelect.setAttribute('placeholder', minLength);
+  });
+
+  capacitySelect.addEventListener('change', function (evt) {
+    var target = evt.currentTarget;
+    var value = target.value;
+    if (value > 1000000) {
+      evt.preventDefault();
+    }
+  });
 
   // Поля «Время заезда» и «Время выезда» синхронизированы:
   // при изменении значения одного поля, во втором выделяется
@@ -122,7 +141,7 @@
   window.form.setElementDisabled(filtersElements, true);
 
   // навешиваю событие при клике на кнопку 'Отправить'
-  form.addEventListener('submit', function (evt) {
+  form.addEventListener('submit', function (evt, text) {
     evt.preventDefault();
     window.upload(new FormData(form), function () {
       // проверяю на работоспособность отображения окна
@@ -132,10 +151,10 @@
       // когда вся форма имела изначальное состояние ...
       // указываю здесь все по порядку с конца и в начало
       // (в функции currentPinMouseUpHandler в файле map.js)
+      window.notifiable.notifiableHandler(successTemplate, text);
       window.form.setElementDisabled(allFormFieldsets, true);
       window.form.setElementDisabled(filtersElements, true);
       form.classList.add('ad-form--disabled');
-      // window.pin.renderButton();
       map.classList.add('map--faded');
 
       // Если при отправке данных произошла ошибка запроса, нужно показать
