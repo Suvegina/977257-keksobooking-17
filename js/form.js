@@ -24,6 +24,10 @@
 
   var filtersElements = document.querySelector('.map__filters').children;
 
+  // текстовое содержание при отправки формы
+  var successTemplate = document.querySelector('#success').content.querySelector('main');
+  var errorTemplate = document.querySelector('#error').content.querySelector('main');
+
 
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
@@ -121,7 +125,7 @@
     evt.preventDefault();
     window.upload(new FormData(form), function (response) {
       // проверяю на работоспособность отображения окна
-      // alert(response);
+      alert(response);
 
       // здесь я возвращаю действия на круги своя ... до того момента,
       // когда вся форма имела изначальное состояние ...
@@ -135,7 +139,7 @@
 
       // Если при отправке данных произошла ошибка запроса, нужно показать
       // соответствующее сообщение в блоке main, используя блок #error из шаблона template
-    }, function(text) {
+    }, function (text) {
       // window.notifiable.errorHandler(text);
       window.notifiable.notifiableHandler(errorTemplate, text);
     });

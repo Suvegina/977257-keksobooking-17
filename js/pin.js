@@ -5,7 +5,7 @@
 
 (function () {
 
-  var pins = [];
+  // var pins = [];
   var mapPin = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 

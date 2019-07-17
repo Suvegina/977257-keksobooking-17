@@ -56,7 +56,7 @@
   };
 
   window.notifiable = {
-    notifiableHandler = notifiableHandler
+    notifiableHandler: notifiableHandler
   }
 
 })();
