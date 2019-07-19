@@ -10,28 +10,10 @@
 
     // задаю функцию запроса для отображения состояния (ответа) сервера
     var onLoadRequest = function () {
-      var error;
-      switch (xhr.status) {
-        case 200:
-          onSuccess(xhr.response);
-          break;
-        case 400:
-          error = 'Bad request';
-          break;
-        case 401:
-          error = 'Access denied';
-          break;
-        case 404:
-          error = 'Not found';
-          break;
-        // case 504:
-        //   error = 'Time out';
-        //   break;
-        default:
-          error = 'Status' + xhr.status + ' ' + xhr.statusText;
-      }
-      if (error) {
-        onError(error);
+      if (xhr.status === 200) {
+        onSuccess(xhr.response);
+      } else {
+        onError(xhr.status);
       }
     };
 
