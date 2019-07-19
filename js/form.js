@@ -142,9 +142,6 @@
   form.addEventListener('submit', function (evt, text) {
     evt.preventDefault();
     window.upload(new FormData(form), function () {
-      // проверяю на работоспособность отображения окна
-      // alert(response);
-
       // здесь я возвращаю действия на круги своя ... до того момента,
       // когда вся форма имела изначальное состояние ...
       // указываю здесь все по порядку с конца и в начало
@@ -160,6 +157,7 @@
     }, function (text) {
       // window.notifiable.errorHandler(text);
       window.notifiable.notifiableHandler(errorTemplate, text);
+      document.addEventListener('click', window.notifiable.errorClickHandler);
     });
   });
 })();

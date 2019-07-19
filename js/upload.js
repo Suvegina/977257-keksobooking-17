@@ -9,7 +9,6 @@
   // объект с данными, которые необходим отправить — data
   // функцию обратного вызова onSuccess, которая будет вызываться
   // каждый раз, когда данные отправлены успешно.
-  // Запишу упрощенное условие для отправки на сервер
   window.upload = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';

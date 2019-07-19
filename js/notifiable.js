@@ -5,19 +5,22 @@
 
 (function () {
 
+  // текстовое содержание при отправки формы
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+
   var tagMain = document.querySelector('main');
 
   var notifiableHandler = function (fromTemplate, Message) {
     var node = fromTemplate.cloneNode(true);
-    // node.textContent = Message;
     tagMain.appendChild(node);
-
     return fromTemplate;
   };
 
   window.notifiable = {
     notifiableHandler: notifiableHandler,
-    successClickHandler: successClickHandler
+    errorClickHandler: errorClickHandler//,
+    // successClickHandler: successClickHandler
   };
 
   // var successClickHandler = notifiableHandler;
@@ -25,15 +28,24 @@
   //   // remove.pin.renderButton();
   // });
 
-  var errorTemplate = document.querySelector('#error');
+  // должен удалять созданный (сгенерированный div с окном ошибки)
+  var errorClickHandler =  function (errorTemplate) {
+    var errorTemplate;
+    errorTemplate.parentNode.removeChild(errorTemplate);
+  };
 
-  var errorButtonClickHandler = document.querySelector('.error__button');
-  errorButtonClickHandler.addEventListener('click', function () {
-    // remove.pin.renderButton();
-    errorTemplate.style.display = 'none';
-    errorButtonClickHandler.removeEventListener('click', function);
-  });
+  // errorButtonClickHandler.addEventListener('click', errorClickHandler);
 
+  //   errorTemplate.style.display = 'none';
+  //   errorButtonClickHandler.removeEventListener('click', function);
+  // });
+
+  // определяю ф-ю при котором будет удаляться сообщение с ошибкой
+  // var errorClickHandler = function (nodeName) {
+  //   errorTemplate.removeEventListener('click', errorClickHandler);
+  // };
+
+  // errorTemplate.addEventListener('click', errorClickHandler);
 
 })();
 
