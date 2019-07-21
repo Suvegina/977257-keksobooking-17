@@ -20,5 +20,5 @@
   window.util = {
     isEscEvent: isEscEvent,
     isEnterEvent: isEnterEvent
-  }
+  };
 })();

@@ -154,7 +154,7 @@
 
       // Если при отправке данных произошла ошибка запроса, нужно показать
       // соответствующее сообщение в блоке main, используя блок #error из шаблона template
-    }, function (text) {
+    }, function () {
       // window.notifiable.errorHandler(text);
       window.notifiable.notifiableHandler(errorTemplate, text);
       document.addEventListener('click', window.notifiable.errorClickHandler);

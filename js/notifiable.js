@@ -6,12 +6,12 @@
 (function () {
 
   // текстовое содержание при отправки формы
-  var successTemplate = document.querySelector('#success').content.querySelector('.success');
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  // var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  // var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
   var tagMain = document.querySelector('main');
 
-  var notifiableHandler = function (fromTemplate, Message) {
+  var notifiableHandler = function (fromTemplate) {
     var node = fromTemplate.cloneNode(true);
     tagMain.appendChild(node);
     return fromTemplate;
@@ -19,7 +19,7 @@
 
   window.notifiable = {
     notifiableHandler: notifiableHandler,
-    errorClickHandler: errorClickHandler//,
+    errorClickHandler: errorClickHandler
     // successClickHandler: successClickHandler
   };
 
@@ -29,8 +29,7 @@
   // });
 
   // должен удалять созданный (сгенерированный div с окном ошибки)
-  var errorClickHandler =  function (errorTemplate) {
-    var errorTemplate;
+  var errorClickHandler = function (errorTemplate) {
     errorTemplate.parentNode.removeChild(errorTemplate);
   };
 
