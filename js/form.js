@@ -24,6 +24,9 @@
 
   var filtersElements = document.querySelector('.map__filters').children;
 
+  // текстовое содержание при отправки формы
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
@@ -55,6 +58,25 @@
     }
   });
 
+  var roomSelect = document.querySelector('#room_number');
+  var capacitySelect = document.querySelector('#capacity');
+
+  roomSelect.addEventListener('change', function (evt) {
+    var target = evt.currentTarget;
+    var selected = target.selectedOptions[0];
+    var minLength = selected.getAttribute('minlength');
+
+    capacitySelect.setAttribute('min', minLength);
+    capacitySelect.setAttribute('placeholder', minLength);
+  });
+
+  capacitySelect.addEventListener('change', function (evt) {
+    var target = evt.currentTarget;
+    var value = target.value;
+    if (value > 1000000) {
+      evt.preventDefault();
+    }
+  });
 
   // Поля «Время заезда» и «Время выезда» синхронизированы:
   // при изменении значения одного поля, во втором выделяется
@@ -95,8 +117,8 @@
     address.value = x + ', ' + y;
   };
 
-  window.updateAddress = updateAddress;
-  currentPin.addEventListener('mouseup', window.updateAddress);
+  // window.updateAddress = updateAddress;
+  currentPin.addEventListener('mouseup', updateAddress);
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
   var setElementDisabled = function (elements, isDisabled) {
@@ -105,8 +127,37 @@
     }
   };
 
-  window.setElementDisabled = setElementDisabled;
+  window.form = {
+    updateAddress: updateAddress(),
+    setElementDisabled: setElementDisabled
+  };
+
+  // window.form.setElementDisabled = setElementDisabled;
+
   // определяю универсальную функцию на каждый нужный набор классов
-  window.setElementDisabled(allFormFieldsets, true);
-  window.setElementDisabled(filtersElements, true);
+  window.form.setElementDisabled(allFormFieldsets, true);
+  window.form.setElementDisabled(filtersElements, true);
+
+  // навешиваю событие при клике на кнопку 'Отправить'
+  form.addEventListener('submit', function (evt, text) {
+    evt.preventDefault();
+    window.upload(new FormData(form), function () {
+      // здесь я возвращаю действия на круги своя ... до того момента,
+      // когда вся форма имела изначальное состояние ...
+      // указываю здесь все по порядку с конца и в начало
+      // (в функции currentPinMouseUpHandler в файле map.js)
+      window.notifiable.notifiableHandler(successTemplate, text);
+      window.form.setElementDisabled(allFormFieldsets, true);
+      window.form.setElementDisabled(filtersElements, true);
+      form.classList.add('ad-form--disabled');
+      map.classList.add('map--faded');
+
+      // Если при отправке данных произошла ошибка запроса, нужно показать
+      // соответствующее сообщение в блоке main, используя блок #error из шаблона template
+    }, function () {
+      // window.notifiable.errorHandler(text);
+      window.notifiable.notifiableHandler(errorTemplate, text);
+      document.addEventListener('click', window.notifiable.errorClickHandler);
+    });
+  });
 })();

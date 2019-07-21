@@ -5,7 +5,7 @@
 
 (function () {
 
-  var pins = [];
+  // var pins = [];
   var mapPin = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -29,13 +29,19 @@
 
   // функция циклического дублирования пинов
   var renderButton = function () {
-    for (var i = 0; i < 8; i++) {
-      var pin = window.data.generatePin(i);
-
-      mapPin.appendChild(makeButton(pin));
-      pins.push(pin);
-    }
+    // вызываю функци с синхронизацией адреса (положение главного пина)
+    // window.form.updateAddress();
+    window.load(function (pins) {
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < pins.length; i++) {
+        fragment.appendChild(makeButton(pins[i]));
+      }
+      mapPin.appendChild(fragment);
+    });
   };
 
-  window.renderButton = renderButton;
+  // window.renderButton = renderButton;
+  window.pin = {
+    renderButton: renderButton
+  };
 })();
