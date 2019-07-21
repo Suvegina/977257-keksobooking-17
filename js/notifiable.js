@@ -48,9 +48,3 @@
   // errorTemplate.addEventListener('click', errorClickHandler);
 
 })();
-
-
-// докрутить обработчик событий при возникновении ошибки
-// надо выбрать все пины и удалить их с помощью метода remove()
-
-

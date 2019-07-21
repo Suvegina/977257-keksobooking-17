@@ -58,104 +58,31 @@
     }
   });
 
-
-// var opt = document.querySelector('#capacity');
-// document.querySelector('#room_number').addEventListener("change", function() {
-//   var currentVal = this.value;
-//   if (currentVal == 0) {
-//     for (var i = 0; i < opt.children.length; i++) {
-//       opt.children[i].disabled = true;
-//     }
-//     opt.children[opt.children.length - 1].disabled = false;
-//     opt.children[opt.children.length - 1].selected = true;
-//   } else {
-//     for (var i = 0; i < opt.children.length; i++) {
-//       if (i < currentVal) {
-//         opt.children[i].disabled = false;
-//       } else {
-//         opt.children[i].disabled = true;
-//       }
-//     }
-//     opt.children[0].selected = true;
-//   }
-// });
-
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
 
+  roomSelect.addEventListener('change', function (evt) {
+    var target = evt.currentTarget;
+    var selected = target.selectedOptions[0];
+    var minLength = selected.getAttribute('minlength');
 
-// //////////////////////////////////////////////////////////////////
-  // условие, которое будет определять четкие рамки при выборе каждого селекта
+    capacitySelect.setAttribute('min', minLength);
+    capacitySelect.setAttribute('placeholder', minLength);
+  });
 
-  var synchronizationRoom = function () {
-    var currentValue = this.value;
-    if (currentValue == 0) {
-      for (var i = 0; i < capacitySelect.children.length; i++) {
-        capacitySelect.children[i].disabled = true;
-      }
-      capacitySelect.children[capacitySelect.children.length - 1].disabled = false;
-      capacitySelect.children[capacitySelect.children.length - 1].selected = true;
-    } else {
-      for (var i = 0; i < capacitySelect.children.length; i++) {
-        if (i < currentValue) {
-          capacitySelect.children[i].disabled = false;
-        } else {
-          capacitySelect.children[i].disabled = true;
-        }
-      }
-     return capacitySelect.children.selected = true;
+  capacitySelect.addEventListener('change', function (evt) {
+    var target = evt.currentTarget;
+    var value = target.value;
+    if (value > 1000000) {
+      evt.preventDefault();
     }
-  };
+  });
 
-  roomSelect.addEventListener('change', synchronizationRoom);
+  // Поля «Время заезда» и «Время выезда» синхронизированы:
+  // при изменении значения одного поля, во втором выделяется
+  // соответствующее ему. Например, если время заезда указано «после 14»,
+  // то время выезда будет равно «до 14» и наоборот.
 
-  // var synchronizationRoom = function () {
-  //   var currentValue = this.value;
-  //   if (currentValue == 0) {
-  //     for (var i = 0; i < capacitySelect.children.length; i++) {
-  //       capacitySelect.children[i].disabled = true;
-  //     }
-  //     capacitySelect.children[capacitySelect.children.length - 1].disabled = false;
-  //     capacitySelect.children[capacitySelect.children.length - 1].selected = true;
-  //   } else {
-  //     for (var i = 0; i < capacitySelect.children.length; i++) {
-  //       if (i < currentValue) {
-  //         capacitySelect.children[i].disabled = false;
-  //       } else {
-  //         capacitySelect.children[i].disabled = true;
-  //       }
-  //     }
-  //   // capacitySelect.children.selected = true;
-  //   }
-  // };
-
-  // roomSelect.addEventListener('change', synchronizationRoom);
-  // capacitySelect.addEventListener('change', synchronizationRoom);
-
-///////////////////////////////////////////////////////////////////////
-// мой вариант до :
-  // var roomSelect = document.querySelector('#room_number');
-  // var capacitySelect = document.querySelector('#capacity');
-
-  // roomSelect.addEventListener('change', function (evt) {
-  //   var target = evt.currentTarget;
-  //   var selected = target.selectedOptions[0];
-  //   var minLength = selected.getAttribute('minlength');
-
-  //   capacitySelect.setAttribute('min', minLength);
-  //   capacitySelect.setAttribute('placeholder', minLength);
-  // });
-
-  // capacitySelect.addEventListener('change', function (evt) {
-  //   var target = evt.currentTarget;
-  //   var value = target.value;
-  //   if (value > 1000000) {
-  //     evt.preventDefault();
-  //   }
-  // });
-
-  // Поля «Время заезда» и «Время выезда» синхронизированы: при изменении значения одного поля, во втором выделяется
-  // соответствующее ему. Например, если время заезда указано «после 14», то время выезда будет равно «до 14» и наоборот.
   // Определяем универсальную функцию, которая будет синхронизовать 1-е поле (время заезда) со 2-м полем (время выезда)
 
   var synchronizationDate = function (from, to) {
