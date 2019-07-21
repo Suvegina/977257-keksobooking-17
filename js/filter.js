@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   var filterType = document.querySelector('#housing-type');
 
   // Функция, которая получает массив пинов и генерирует из тех же пинов новый массив отфильтрованный по значениям фильтра
@@ -8,9 +8,9 @@
     var filterValue = filterType.value;
     // метод создает новый массив на основе условия, если оно верное - то элемент добавляется в новый массив,
     // если нет - то он просто пропускает
-    var filteredPins = pins.filter(function(pin) {
+    var filteredPins = pins.filter(function (pin) {
       return (filterValue === 'any' || filterValue === pin.offer.type);
-    })
+    });
     return filteredPins;
   };
   // навешиваем события на отображение пинов по выбранному параметру.

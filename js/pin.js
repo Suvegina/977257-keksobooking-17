@@ -33,11 +33,11 @@
     window.load(function (pinsData) {
       window.pin.allPins = pinsData;
       var newPins = window.filter.filterPins(window.pin.allPins);
-      console.log(newPins);
       renderPins(newPins);
     });
   };
 
+  // функция отрисовки пинов
   var renderPins = function (pins) {
     var fragment = document.createDocumentFragment();
     var length = Math.min(5, pins.length);
@@ -47,12 +47,13 @@
     mapPin.appendChild(fragment);
   };
 
-  // функция удаления пина
+  // функция удаления пина (нужна для того, чтобы при клике
+  // на поле фильтра "тип жилья" отрисовка пинов сбрасывалась)
   var removePins = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pins.forEach(function(pin) {
+    pins.forEach(function (pin) {
       pin.remove();
-    })
+    });
   };
 
 
