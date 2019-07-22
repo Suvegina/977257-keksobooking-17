@@ -17,7 +17,7 @@
     var card = cardTemplate.cloneNode(true);
     card.querySelector('.popup__title').textContent = pin.offer.title;
     card.querySelector('.popup__text--address').textContent = pin.offer.address;
-    // ... price
+    card.querySelector('.popup__text--price').textContent = pin.offer.price + '₽/ночь';
     card.querySelector('.popup__type').textContent = PIN_TYPES[pin.offer.type];
     // popup__photos - выводить через цикл клонируя img (используя cloneNode) и appendChild после этого.
     document.querySelector('.map').appendChild(card);
