@@ -32,6 +32,7 @@
     // вызываю функци с синхронизацией адреса (положение главного пина)
     window.load(function (pinsData) {
       window.pin.allPins = pinsData;
+      window.card.render(window.pin.allPins[0]);
       var newPins = window.filter.filterPins(window.pin.allPins);
       renderPins(newPins);
     });
@@ -55,7 +56,6 @@
       pin.remove();
     });
   };
-
 
   window.pin = {
     allPins: [],
