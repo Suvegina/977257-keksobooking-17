@@ -32,6 +32,7 @@
     // вызываю функци с синхронизацией адреса (положение главного пина)
     window.load(function (pinsData) {
       window.pin.allPins = pinsData;
+      window.card.render(window.pin.allPins[0]);
       var newPins = window.filter.filterPins(window.pin.allPins);
       renderPins(newPins);
     });
@@ -56,8 +57,10 @@
     });
   };
 
-
   window.pin = {
+    // Если вначале данного модуля (js/pin.js) задать переменную allPins и задать ей массив,
+    // то передав её в ГО видимости (allPins: allPins[] - само значение массивов будет переопределяться)
+    // Поэтому, передаем обыекты allPins сразу в глобальную область видимости, для того чтобы данный объект не переопределялся.
     allPins: [],
     renderButton: renderButton,
     renderPins: renderPins,
