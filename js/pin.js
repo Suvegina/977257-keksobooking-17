@@ -5,7 +5,6 @@
 
 (function () {
 
-  // var pins = [];
   var mapPin = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -24,6 +23,15 @@
     element.style.top = pin.location.y - PIN_POSITION_Y + 'px';
     element.querySelector('img').src = pin.author.avatar;
 
+    // Навешиваем обработчик на событие клика для удаления карточки при нажатии клавиш ESC
+    element.addEventListener('click', function () {
+      var oldCard = document.querySelector('.map__card');
+      if (oldCard) {
+        oldCard.remove();
+      }
+      window.card.render(pin);
+    });
+
     return element;
   };
 
@@ -32,7 +40,7 @@
     // вызываю функци с синхронизацией адреса (положение главного пина)
     window.load(function (pinsData) {
       window.pin.allPins = pinsData;
-      window.card.render(window.pin.allPins[0]);
+      // window.card.render(window.pin.allPins[0]);
       var newPins = window.filter.filterPins(window.pin.allPins);
       renderPins(newPins);
     });
@@ -43,7 +51,8 @@
     var fragment = document.createDocumentFragment();
     var length = Math.min(5, pins.length);
     for (var i = 0; i < length; i++) {
-      fragment.appendChild(makeButton(pins[i]));
+      var element = makeButton(pins[i]);
+      fragment.appendChild(element);
     }
     mapPin.appendChild(fragment);
   };
@@ -56,6 +65,7 @@
       pin.remove();
     });
   };
+
 
   window.pin = {
     // Если вначале данного модуля (js/pin.js) задать переменную allPins и задать ей массив,

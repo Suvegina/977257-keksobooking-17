@@ -10,6 +10,7 @@
     palace: 'Дворец'
   };
 
+  // Заполняем карточку данными с сервера
   var renderCard = function (pin) {
     var card = cardTemplate.cloneNode(true);
     card.querySelector('.popup__title').textContent = pin.offer.title;
@@ -20,10 +21,31 @@
     card.querySelector('.popup__text--time').textContent = 'Заезд после' + pin.offer.checkin + ', выезд до ' + pin.offer.checkout;
     card.querySelector('.popup__description').textContent = pin.offer.description;
     card.querySelector('.popup__avatar').src = pin.author.avatar;
+
+
     photoPreview(card, pin.offer.photos);
     renderFeatures(card, pin.offer.features);
+
     document.querySelector('.map').appendChild(card);
+
+    // определяю коллбэк функцию для удаления карточки после клика на закрытие
+    var removeCard = function () {
+      card.remove();
+    };
+
+    var closeCard = card.querySelector('.popup__close');
+    closeCard.addEventListener('click', removeCard);
+
+    // добавляю события на нажание клавиши ESC
+    var escKeydownHandler = function (evt) {
+      window.util.isEscEvent(evt, removeCard);
+      document.removeEventListener('keydown', escKeydownHandler);
+    };
+
+    document.addEventListener('keydown', escKeydownHandler);
   };
+
+  // renderCard.addEventListener('keudown', function())
 
   // popup__photos - выводить через цикл клонируя img (используя cloneNode) и appendChild после этого.
   var photoPreview = function (card, photos) {
