@@ -45,8 +45,6 @@
     document.addEventListener('keydown', escKeydownHandler);
   };
 
-  // renderCard.addEventListener('keudown', function())
-
   // popup__photos - выводить через цикл клонируя img (используя cloneNode) и appendChild после этого.
   var photoPreview = function (card, photos) {
     var popupPhotos = card.querySelector('.popup__photos');
