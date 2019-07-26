@@ -9,7 +9,9 @@
   // var successTemplate = document.querySelector('#success').content.querySelector('.success');
   // var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
+
   var tagMain = document.querySelector('main');
+
 
   var notifiableHandler = function (fromTemplate) {
     var node = fromTemplate.cloneNode(true);
@@ -27,17 +29,30 @@
   // successClickHandler.addEventListener('click', function () {
   //   // remove.pin.renderButton();
   // });
+  // --------------------------------------------------------------------------
+
+  // var errorPopup = document.querySelector('.error');
+
+  // var removeError = function () {
+  //   errorPopup.remove();
+  // }
+
+  // var closeError = errorPopup;
 
   // должен удалять созданный (сгенерированный div с окном ошибки)
   var errorClickHandler = function (errorTemplate) {
     errorTemplate.parentNode.removeChild(errorTemplate);
+    // errorClickHandler.removeEventListener('click', removeError);
   };
 
-  // errorButtonClickHandler.addEventListener('click', errorClickHandler);
+  // var isEscErrorKeydownHandler = function () {
+  //   errorPopup.remove();
+  //   errorClickHandler.removeEventListener('keydown', isEscErrorKeydownHandler);
+  // }
 
-  //   errorTemplate.style.display = 'none';
-  //   errorButtonClickHandler.removeEventListener('click', function);
-  // });
+  // errorClickHandler.addEventListener('click', removeError);
+  // errorClickHandler.addEventListener('keydown', isEscErrorKeydownHandler);
+  // --------------------------------------------------------------------------
 
   // определяю ф-ю при котором будет удаляться сообщение с ошибкой
   // var errorClickHandler = function (nodeName) {

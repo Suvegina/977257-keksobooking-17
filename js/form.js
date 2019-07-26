@@ -28,6 +28,10 @@
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
+  // определяем нахождение полей select (количество комнат и гостей)
+  var roomSelect = document.querySelector('#room_number');
+  var capacitySelect = document.querySelector('#capacity');
+
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
     if (titleField.validity.tooShort) {
@@ -58,25 +62,48 @@
     }
   });
 
-  var roomSelect = document.querySelector('#room_number');
-  var capacitySelect = document.querySelector('#capacity');
 
-  roomSelect.addEventListener('change', function (evt) {
-    var target = evt.currentTarget;
-    var selected = target.selectedOptions[0];
-    var minLength = selected.getAttribute('minlength');
-
-    capacitySelect.setAttribute('min', minLength);
-    capacitySelect.setAttribute('placeholder', minLength);
-  });
-
-  capacitySelect.addEventListener('change', function (evt) {
-    var target = evt.currentTarget;
-    var value = target.value;
-    if (value > 1000000) {
-      evt.preventDefault();
+  // проверяю соответствие колличества комнат и гостей с помощью булевного значения
+  var roomsForGuests = function () {
+    if (roomSelect.value === capacitySelect.value) {
+      return true;
+    } else if ((!(roomSelect.value === '100')) && (capacitySelect.value === '0')) {
+      return false;
+    } else if ((!(roomSelect.value === '100')) && (roomSelect.value > capacitySelect.value)) {
+      return true;
+    } else if ((roomSelect.value === '100') && (capacitySelect.value === '0')) {
+      return true;
+    } else if ((roomSelect.value === '100') && (!(capacitySelect.value === '0'))) {
+      return false;
+    } else if (roomSelect.value < capacitySelect.value) {
+      return false;
+    } else if ((roomSelect.value === '1') && (capacitySelect.value === '0')) {
+      return false;
+    } else if ((roomSelect.value === '2') && (capacitySelect.value === '0')) {
+      return false;
+    } else if ((roomSelect.value === '3') && (capacitySelect.value === '0')) {
+      return false;
     }
-  });
+    return false;
+  };
+
+  var setValidation = function (select) {
+    var checkValid = roomsForGuests();
+    if (!checkValid) {
+      select.setCustomValidity('Количество комнат не соответствует количеству возможных гостей');
+    } else {
+      select.setCustomValidity('');
+    }
+  };
+
+  var roomCapacityChangeHandler = function () {
+    setValidation(roomSelect);
+    setValidation(capacitySelect);
+  };
+
+  roomSelect.addEventListener('change', roomCapacityChangeHandler);
+  capacitySelect.addEventListener('change', roomCapacityChangeHandler);
+
 
   // Поля «Время заезда» и «Время выезда» синхронизированы:
   // при изменении значения одного поля, во втором выделяется
