@@ -6,59 +6,54 @@
 (function () {
 
   // текстовое содержание при отправки формы
-  // var successTemplate = document.querySelector('#success').content.querySelector('.success');
-  // var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
-
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var tagMain = document.querySelector('main');
 
 
-  var notifiableHandler = function (fromTemplate) {
-    var node = fromTemplate.cloneNode(true);
+  // события для отрисовки и удаления окна после успешной отправки формы
+  var successHandler = function () {
+    var node = successTemplate.cloneNode(true);
     tagMain.appendChild(node);
-    return fromTemplate;
+
+    var removesuccess = function () {
+      node.remove();
+    };
+
+    node.addEventListener('click', removesuccess);
+
+    var escKeydownHandler = function (evt) {
+      window.util.isEscEvent(evt, removesuccess);
+      document.removeEventListener('keydown', escKeydownHandler);
+    };
+
+    document.addEventListener('keydown', escKeydownHandler);
   };
+
+
+  // события для отрисовки и удаления окна с ошибкой
+  var errorHandler = function () {
+    var node = errorTemplate.cloneNode(true);
+    tagMain.appendChild(node);
+
+    var removeError = function () {
+      node.remove();
+    };
+
+    var errorButton = node.querySelector('.error__button');
+    errorButton.addEventListener('click', removeError);
+
+    var escKeydownHandler = function (evt) {
+      window.util.isEscEvent(evt, removeError);
+      document.removeEventListener('keydown', escKeydownHandler);
+    };
+
+    document.addEventListener('keydown', escKeydownHandler);
+  };
+
 
   window.notifiable = {
-    notifiableHandler: notifiableHandler,
-    errorClickHandler: errorClickHandler
-    // successClickHandler: successClickHandler
+    successHandler: successHandler,
+    errorHandler: errorHandler
   };
-
-  // var successClickHandler = notifiableHandler;
-  // successClickHandler.addEventListener('click', function () {
-  //   // remove.pin.renderButton();
-  // });
-  // --------------------------------------------------------------------------
-
-  // var errorPopup = document.querySelector('.error');
-
-  // var removeError = function () {
-  //   errorPopup.remove();
-  // }
-
-  // var closeError = errorPopup;
-
-  // должен удалять созданный (сгенерированный div с окном ошибки)
-  var errorClickHandler = function (errorTemplate) {
-    errorTemplate.parentNode.removeChild(errorTemplate);
-    // errorClickHandler.removeEventListener('click', removeError);
-  };
-
-  // var isEscErrorKeydownHandler = function () {
-  //   errorPopup.remove();
-  //   errorClickHandler.removeEventListener('keydown', isEscErrorKeydownHandler);
-  // }
-
-  // errorClickHandler.addEventListener('click', removeError);
-  // errorClickHandler.addEventListener('keydown', isEscErrorKeydownHandler);
-  // --------------------------------------------------------------------------
-
-  // определяю ф-ю при котором будет удаляться сообщение с ошибкой
-  // var errorClickHandler = function (nodeName) {
-  //   errorTemplate.removeEventListener('click', errorClickHandler);
-  // };
-
-  // errorTemplate.addEventListener('click', errorClickHandler);
-
 })();

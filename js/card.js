@@ -57,6 +57,14 @@
     imgTemplate.remove();
   };
 
+  // удаляем карточку
+  var deleteCard = function () {
+    var selectCard = document.querySelector('.map__card');
+    if (selectCard) {
+      selectCard.remove();
+    }
+  };
+
   // Первый цикл - (перебор по тегам)
   // Вторым циклом - для каждого тега обходим все имеющихся удобств апартаментов.
   // Ищем совпадения тега и удобства по классу. Если нет совпадения - то удаляем.
@@ -83,6 +91,7 @@
   }; // Переписать код на цикл .every, .some, .forEach (48 - 66 строки)
 
   window.card = {
-    render: renderCard
+    render: renderCard,
+    deleteCard: deleteCard
   };
 })();
