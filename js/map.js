@@ -6,7 +6,7 @@
 
 
 // перемещение метки, события на главной метке.
-var movingCurrentPin = function () {
+(function () {
 
   var map = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
@@ -14,6 +14,16 @@ var movingCurrentPin = function () {
   var allFormFieldsets = form.querySelectorAll('fieldset');
   var filtersElements = document.querySelector('.map__filters').children;
 
+  // задаю начальное положение пина
+  var MAIN_PIN_POSITION_X = 570;
+  var MAIN_PIN_POSITION_Y = 375;
+
+
+  var setDefaulMainPinPosition = function () {
+    currentPin.style.left = MAIN_PIN_POSITION_X + 'px';
+    currentPin.style.top = MAIN_PIN_POSITION_Y + 'px';
+    window.form.updateAddress(MAIN_PIN_POSITION_X, MAIN_PIN_POSITION_Y);
+  };
 
   currentPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -79,7 +89,9 @@ var movingCurrentPin = function () {
 
     document.addEventListener('mousemove', currentPinMouseMoveHandler);
     document.addEventListener('mouseup', currentPinMouseUpHandler);
-  });
-};
 
-movingCurrentPin();
+    window.map = {
+      setDefaulMainPinPosition: setDefaulMainPinPosition
+    };
+  });
+})();

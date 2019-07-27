@@ -24,10 +24,6 @@
 
   var filtersElements = document.querySelector('.map__filters').children;
 
-  // текстовое содержание при отправки формы
-  var successTemplate = document.querySelector('#success').content.querySelector('.success');
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
   // определяем нахождение полей select (количество комнат и гостей)
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
@@ -144,6 +140,8 @@
     address.value = x + ', ' + y;
   };
 
+  updateAddress();
+
   // window.updateAddress = updateAddress;
   currentPin.addEventListener('mouseup', updateAddress);
 
@@ -154,37 +152,40 @@
     }
   };
 
-  window.form = {
-    updateAddress: updateAddress(),
-    setElementDisabled: setElementDisabled
-  };
-
-  // window.form.setElementDisabled = setElementDisabled;
-
   // определяю универсальную функцию на каждый нужный набор классов
-  window.form.setElementDisabled(allFormFieldsets, true);
-  window.form.setElementDisabled(filtersElements, true);
+  setElementDisabled(allFormFieldsets, true);
+  setElementDisabled(filtersElements, true);
+
+  // перед отправкой формы вызываю функцию валидации для полей "количества комнат и гостей"
+  roomCapacityChangeHandler();
 
   // навешиваю событие при клике на кнопку 'Отправить'
-  form.addEventListener('submit', function (evt, text) {
+  form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.upload(new FormData(form), function () {
       // здесь я возвращаю действия на круги своя ... до того момента,
       // когда вся форма имела изначальное состояние ...
       // указываю здесь все по порядку с конца и в начало
       // (в функции currentPinMouseUpHandler в файле map.js)
-      window.notifiable.notifiableHandler(successTemplate, text);
-      window.form.setElementDisabled(allFormFieldsets, true);
-      window.form.setElementDisabled(filtersElements, true);
+      window.notifiable.successHandler();
+      form.reset();
+      setElementDisabled(allFormFieldsets, true);
+      setElementDisabled(filtersElements, true);
+      window.pin.removePins();
+      window.card.deleteCard();
+      window.map.setDefaulMainPinPosition();
       form.classList.add('ad-form--disabled');
       map.classList.add('map--faded');
 
       // Если при отправке данных произошла ошибка запроса, нужно показать
       // соответствующее сообщение в блоке main, используя блок #error из шаблона template
     }, function () {
-      // window.notifiable.errorHandler(text);
-      window.notifiable.notifiableHandler(errorTemplate, text);
-      document.addEventListener('click', window.notifiable.errorClickHandler);
+      window.notifiable.errorHandler();
     });
   });
+
+  window.form = {
+    setElementDisabled: setElementDisabled,
+    updateAddress: updateAddress
+  };
 })();

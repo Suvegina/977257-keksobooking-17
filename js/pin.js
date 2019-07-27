@@ -8,7 +8,6 @@
   var mapPin = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-
   // Проверка размера ширины окна (класса)
   // var MAX_WIDTH = mapPin.offsetWidth;
 
