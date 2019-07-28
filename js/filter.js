@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  // находим элемент родителя фильтров, например: (filtersForm)
+  // - для того чтобы навесить события на переотрисовку полученных пинов с сервера
+  var filtersForm = document.querySelector('.map__filters');
+
   var filterType = document.querySelector('#housing-type');
   var filterPrice = document.querySelector('#housing-price');
   var filterRooms = document.querySelector('#housing-rooms');
@@ -17,7 +21,7 @@
         isPinRoomsFiltered(pin) &&
         isPinGuestFiltered(pin) &&
         isPinFeauturesFiltered(pin)
-      )
+      );
     });
     return filteredPins;
   };
@@ -40,20 +44,22 @@
   };
 
   // ф-я проверяет зн-е по количеству комнат
+  // для приведения типов (через строку) используем parseInt или знак +
   var isPinRoomsFiltered = function (pin) {
     var filterRoomsValue = filterRooms.value;
     return (
       (filterRoomsValue === 'any') ||
-      (filterRoomsValue === pin.offer.rooms)
+      (parseInt(filterRoomsValue) === pin.offer.rooms)
     );
   };
 
   // ф-я для проверки количества гостей
+  // для приведения типов (через строку) используем parseInt или знак +
   var isPinGuestFiltered = function (pin) {
     var filterCapacityValue = filterCapacity.value;
     return (
       (filterCapacityValue === 'any') ||
-      (filterCapacityValue === pin.offer.guests)
+      (parseInt(filterCapacityValue) === pin.offer.guests)
     );
   };
 
@@ -69,7 +75,7 @@
   };
 
   // навешиваем события на отображение пинов по выбранному параметру.
-  filterType.addEventListener('change', function () {
+  filtersForm.addEventListener('change', function () {
     var pins = filterPins(window.pin.allPins);
     window.pin.removePins();
     window.pin.renderPins(pins);
