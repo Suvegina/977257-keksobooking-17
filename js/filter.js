@@ -49,7 +49,7 @@
     var filterRoomsValue = filterRooms.value;
     return (
       (filterRoomsValue === 'any') ||
-      (parseInt(filterRoomsValue) === pin.offer.rooms)
+      (parseInt(filterRoomsValue, 10) === pin.offer.rooms)
     );
   };
 
@@ -59,7 +59,7 @@
     var filterCapacityValue = filterCapacity.value;
     return (
       (filterCapacityValue === 'any') ||
-      (parseInt(filterCapacityValue) === pin.offer.guests)
+      (parseInt(filterCapacityValue, 10) === pin.offer.guests)
     );
   };
 
