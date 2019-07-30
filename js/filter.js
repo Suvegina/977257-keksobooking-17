@@ -74,12 +74,15 @@
     return true;
   };
 
-  // навешиваем события на отображение пинов по выбранному параметру.
-  filtersForm.addEventListener('change', function () {
+  // создаю callback функцию с функцией debounce(), в которой помещаю все действия связанные с отрисовкой пинов по выбору фильтрам
+  var filterChangeHandler = window.debounce(function (pins) {
     var pins = filterPins(window.pin.allPins);
     window.pin.removePins();
     window.pin.renderPins(pins);
   });
+
+  // Вызываю полученную callback функцию (с функцией устранение дребезга ('debounce()')) на событии формы с фильтрами
+  filtersForm.addEventListener('change', filterChangeHandler);
 
   window.filter = {
     filterPins: filterPins
