@@ -15,6 +15,9 @@
   var PIN_POSITION_X = 20;
   var PIN_POSITION_Y = 62;
 
+  // Отрисовывание максимального количества пинов
+  var MAX_PINS = 5;
+
   // функция, с помощью которой мы клонируем элемент из Template шаблона в разметке
   var makeButton = function (pin) {
     var element = pinTemplate.cloneNode(true);
@@ -45,14 +48,15 @@
     });
   };
 
+
   // функция отрисовки пинов
   var renderPins = function (pins) {
     var fragment = document.createDocumentFragment();
-    var length = Math.min(5, pins.length);
-    for (var i = 0; i < length; i++) {
-      var element = makeButton(pins[i]);
+
+    pins.slice(0, MAX_PINS).forEach(function (pin) {
+      var element = makeButton(pin);
       fragment.appendChild(element);
-    }
+    });
     mapPin.appendChild(fragment);
   };
 

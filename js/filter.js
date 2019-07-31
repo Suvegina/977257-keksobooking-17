@@ -66,12 +66,13 @@
     // метод создает новый массив на основе условия, если оно верное - то элемент добавляется в новый массив,
     // если нет - то он просто пропускает
   var isPinFeauturesFiltered = function (pin) {
-    for (var i = 0; i < inputFeatures.length; i++) {
-      if (inputFeatures[i].checked && !pin.offer.features.includes(inputFeatures[i].value)) {
-        return false;
-      }
-    }
-    return true;
+
+    // Конструкция every проверяет каждый элемент на условие, возвращает true (если  каждый элемент удовлетворяет условию)
+    return Array.from(inputFeatures).every(function (inputFeature) {
+
+      // при инвертировании выражения, меняем знаки
+      return !(inputFeature.checked && !pin.offer.features.includes(inputFeature.value));
+    });
   };
 
   // создаю callback функцию с функцией debounce(), в которой помещаю все действия связанные с отрисовкой пинов по выбору фильтрам
