@@ -28,6 +28,13 @@
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
 
+  // Определяю максимальное значение для поля "Цена за ночь"
+  var MAX_VALUE = 1000000;
+
+  // текстовое содержание при отправки формы
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
     if (titleField.validity.tooShort) {
@@ -53,7 +60,7 @@
   nightSelect.addEventListener('change', function (evt) {
     var target = evt.currentTarget;
     var value = target.value;
-    if (value > 1000000) {
+    if (value > MAX_VALUE) {
       evt.preventDefault();
     }
   });
@@ -98,7 +105,6 @@
     });
 
     toChangeOption.selected = true;
-
   };
 
   // вешаем полученные функции на события отслеживания:
@@ -123,14 +129,10 @@
 
   updateAddress();
 
-  // window.updateAddress = updateAddress;
   currentPin.addEventListener('mouseup', updateAddress);
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
   var setElementDisabled = function (elements, isDisabled) {
-    // for (var i = 0; i < elements.length; i++) {
-    //   elements[i].disabled = isDisabled;
-    // }
     Array.from(elements).forEach(function (element) {
       element.disabled = isDisabled;
     });
@@ -151,7 +153,7 @@
       // когда вся форма имела изначальное состояние ...
       // указываю здесь все по порядку с конца и в начало
       // (в функции currentPinMouseUpHandler в файле map.js)
-      window.notifiable.successHandler();
+      window.notifiable.notifiableHandler(successTemplate);
       form.reset();
       setElementDisabled(allFormFieldsets, true);
       setElementDisabled(filtersElements, true);
@@ -164,7 +166,7 @@
       // Если при отправке данных произошла ошибка запроса, нужно показать
       // соответствующее сообщение в блоке main, используя блок #error из шаблона template
     }, function () {
-      window.notifiable.errorHandler();
+      window.notifiable.notifiableHandler(errorTemplate);
     });
   });
 

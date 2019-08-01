@@ -12,6 +12,10 @@
   var filterFeatures = document.querySelector('#housing-features');
   var inputFeatures = filterFeatures.querySelectorAll('input');
 
+  // Определяем диапазон цен от и до ...
+  var MIN_PRICE = 10000;
+  var MAX_PRICE = 50000;
+
   // Функция, которая получает массив пинов и генерирует из тех же пинов новый массив отфильтрованный по значениям фильтра
   var filterPins = function (pins) {
     var filteredPins = pins.filter(function (pin) {
@@ -37,9 +41,9 @@
     var filterPriceValue = filterPrice.value;
     return (
       (filterPriceValue === 'any') ||
-      (filterPriceValue === 'low' && pin.offer.price < 10000) ||
-      (filterPriceValue === 'middle' && pin.offer.price > 10000 && pin.offer.price < 50000) ||
-      (filterPriceValue === 'high' && pin.offer.price > 50000)
+      (filterPriceValue === 'low' && pin.offer.price < MIN_PRICE) ||
+      (filterPriceValue === 'middle' && pin.offer.price > MIN_PRICE && pin.offer.price < MAX_PRICE) ||
+      (filterPriceValue === 'high' && pin.offer.price > MAX_PRICE)
     );
   };
 

@@ -18,6 +18,11 @@
   var MAIN_PIN_POSITION_X = 570;
   var MAIN_PIN_POSITION_Y = 375;
 
+  // Обозначаем константы координат для области перетаскивания пина
+  var START_COORDINATE_Y = 130;
+  var END_COORDINATE_Y = 630;
+  var START_COORDINATE_X = 10;
+  var END_COORDINATE_X = 1120;
 
   var setDefaulMainPinPosition = function () {
     currentPin.style.left = MAIN_PIN_POSITION_X + 'px';
@@ -55,23 +60,23 @@
 
       var newY = currentPin.offsetTop - shift.y;
       // задаем условие, при котором метка не будет выходить за области экрана по Y
-      if (newY > 130 && newY < 630) {
+      if (newY > START_COORDINATE_Y && newY < END_COORDINATE_Y) {
         currentPin.style.top = (currentPin.offsetTop - shift.y) + 'px';
       }
 
       var newX = currentPin.offsetLeft - shift.x;
       // задаем условие, при котором метка не будет выходить за области экрана по X
-      if (newX > 10 && newX < 1120) {
+      if (newX > START_COORDINATE_X && newX < END_COORDINATE_X) {
         currentPin.style.left = (currentPin.offsetLeft - shift.x) + 'px';
       }
     };
+
 
     var currentPinMouseUpHandler = function (upEvt) {
       upEvt.preventDefault();
 
       document.removeEventListener('mousemove', currentPinMouseMoveHandler);
       document.removeEventListener('mouseup', currentPinMouseUpHandler);
-
 
       // перемещаю сюда события ранее находящихся при событии клика по главной метке
       // условие <if> помогает отрисовки пинов быть только единожды,

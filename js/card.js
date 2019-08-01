@@ -67,8 +67,7 @@
     }
   };
 
-  // Первый цикл - (перебор по тегам)
-  // Вторым циклом - для каждого тега обходим все имеющихся удобств апартаментов.
+  // Для каждого тега обходим все имеющихся удобств апартаментов.
   // Ищем совпадения тега и удобства по классу. Если нет совпадения - то удаляем.
   var renderFeatures = function (card, pinFutures) {
 
@@ -77,20 +76,15 @@
     var features = Array.from(card.querySelector('.popup__features').children);
 
     features.forEach(function (feature) {
-      var isShow = false;
-
-      pinFutures.forEach(function (pinFuture) {
-
-        if (feature.classList.contains('popup__feature--' + pinFuture)) {
-          isShow = true;
-        }
+      var isShow = pinFutures.some(function (pinFuture) {
+        return feature.classList.contains('popup__feature--' + pinFuture);
       });
 
       if (!isShow) {
         feature.remove();
       }
     });
-  }; // Переписать код на цикл .every, .some, .forEach (48 - 66 строки)
+  };
 
   window.card = {
     render: renderCard,

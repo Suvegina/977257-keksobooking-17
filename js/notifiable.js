@@ -5,46 +5,28 @@
 
 (function () {
 
-  // текстовое содержание при отправки формы
-  var successTemplate = document.querySelector('#success').content.querySelector('.success');
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var tagMain = document.querySelector('main');
 
+  // создаю универсальную функцию, которая будет отрисовывать окно
+  // в зависимости от примененного параметра в виде аргумента
 
   // события для отрисовки и удаления окна после успешной отправки формы
-  var successHandler = function () {
-    var node = successTemplate.cloneNode(true);
+  var notifiableHandler = function (messageTemplate) {
+    var node = messageTemplate.cloneNode(true);
     tagMain.appendChild(node);
 
-    var removesuccess = function () {
+    // Создаю функцию для удаления отрисованного окна
+    var removePopup = function () {
       node.remove();
     };
 
-    node.addEventListener('click', removesuccess);
+    // Навешиваю на событие клик - закрытие всплывающего окна
+    node.addEventListener('click', removePopup);
 
+    // создаю событие на нажатие клавиши ESC,
+    // которое будет вызывать функцию удаления отрисованного popup - сообщение
     var escKeydownHandler = function (evt) {
-      window.util.isEscEvent(evt, removesuccess);
-      document.removeEventListener('keydown', escKeydownHandler);
-    };
-
-    document.addEventListener('keydown', escKeydownHandler);
-  };
-
-
-  // события для отрисовки и удаления окна с ошибкой
-  var errorHandler = function () {
-    var node = errorTemplate.cloneNode(true);
-    tagMain.appendChild(node);
-
-    var removeError = function () {
-      node.remove();
-    };
-
-    var errorButton = node.querySelector('.error__button');
-    errorButton.addEventListener('click', removeError);
-
-    var escKeydownHandler = function (evt) {
-      window.util.isEscEvent(evt, removeError);
+      window.util.isEscEvent(evt, removePopup);
       document.removeEventListener('keydown', escKeydownHandler);
     };
 
@@ -53,7 +35,6 @@
 
 
   window.notifiable = {
-    successHandler: successHandler,
-    errorHandler: errorHandler
+    notifiableHandler: notifiableHandler
   };
 })();
