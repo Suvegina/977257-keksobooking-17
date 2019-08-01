@@ -28,6 +28,13 @@
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
 
+  // Определяю максимальное значение для поля "Цена за ночь"
+  var MAX_VALUE = 1000000;
+
+  // текстовое содержание при отправки формы
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
     if (titleField.validity.tooShort) {
@@ -53,50 +60,28 @@
   nightSelect.addEventListener('change', function (evt) {
     var target = evt.currentTarget;
     var value = target.value;
-    if (value > 1000000) {
+    if (value > MAX_VALUE) {
       evt.preventDefault();
     }
   });
 
-
-  // проверяю соответствие колличества комнат и гостей с помощью булевного значения
-  var roomsForGuests = function () {
-    if (roomSelect.value === capacitySelect.value) {
-      return true;
-    } else if ((!(roomSelect.value === '100')) && (capacitySelect.value === '0')) {
-      return false;
-    } else if ((!(roomSelect.value === '100')) && (roomSelect.value > capacitySelect.value)) {
-      return true;
-    } else if ((roomSelect.value === '100') && (capacitySelect.value === '0')) {
-      return true;
-    } else if ((roomSelect.value === '100') && (!(capacitySelect.value === '0'))) {
-      return false;
-    } else if (roomSelect.value < capacitySelect.value) {
-      return false;
-    } else if ((roomSelect.value === '1') && (capacitySelect.value === '0')) {
-      return false;
-    } else if ((roomSelect.value === '2') && (capacitySelect.value === '0')) {
-      return false;
-    } else if ((roomSelect.value === '3') && (capacitySelect.value === '0')) {
-      return false;
-    }
-    return false;
-  };
-
-  var setValidation = function (select) {
-    var checkValid = roomsForGuests();
-    if (!checkValid) {
-      select.setCustomValidity('Количество комнат не соответствует количеству возможных гостей');
-    } else {
+  // проверяю соответствие количества комнат и гостей с помощью условий соответствия, записывая в callBack функцию
+  var roomsForGuests = function (select) {
+    if ((roomSelect.value >= capacitySelect.value && capacitySelect.value !== '0' && roomSelect.value !== '100') ||
+      (roomSelect.value === '100' && capacitySelect.value === '0')) {
       select.setCustomValidity('');
+    } else {
+      select.setCustomValidity('Количество комнат не соответствует выбранному количеству гостей.');
     }
   };
 
+  // создаю функцию, в которой указываю нужные селекты полей для применения проверок валидации
   var roomCapacityChangeHandler = function () {
-    setValidation(roomSelect);
-    setValidation(capacitySelect);
+    roomsForGuests(roomSelect);
+    roomsForGuests(capacitySelect);
   };
 
+  // навешиваю событие на каждое поле
   roomSelect.addEventListener('change', roomCapacityChangeHandler);
   capacitySelect.addEventListener('change', roomCapacityChangeHandler);
 
@@ -106,18 +91,20 @@
   // соответствующее ему. Например, если время заезда указано «после 14»,
   // то время выезда будет равно «до 14» и наоборот.
 
-  // Определяем универсальную функцию, которая будет синхронизовать 1-е поле (время заезда) со 2-м полем (время выезда)
+  // Определяем универсальную функцию, которая будет синхронизовать 1-е поле (время заезда)
+  // со 2-м полем (время выезда)
 
+  // обращаемся к методу from который находится в пространстве имён Array,
+  // чтобы получить массив из коллекции children
   var synchronizationDate = function (from, to) {
-    for (var i = 0; i < from.children.length; i++) {
-      if (from.children[i].selected) {
-        for (var j = 0; j < to.children.length; j++) {
-          if (from.children[i].value === to.children[j].value) {
-            to.children[j].selected = true;
-          }
-        }
-      }
-    }
+    var fromValue = from.value;
+
+    //  метод find - находим среди option 2-го селекта в  option (1-го) с таким же значением
+    var toChangeOption = Array.from(to.options).find(function (toOption) {
+      return toOption.value === fromValue;
+    });
+
+    toChangeOption.selected = true;
   };
 
   // вешаем полученные функции на события отслеживания:
@@ -142,14 +129,13 @@
 
   updateAddress();
 
-  // window.updateAddress = updateAddress;
   currentPin.addEventListener('mouseup', updateAddress);
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
   var setElementDisabled = function (elements, isDisabled) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].disabled = isDisabled;
-    }
+    Array.from(elements).forEach(function (element) {
+      element.disabled = isDisabled;
+    });
   };
 
   // определяю универсальную функцию на каждый нужный набор классов
@@ -167,7 +153,7 @@
       // когда вся форма имела изначальное состояние ...
       // указываю здесь все по порядку с конца и в начало
       // (в функции currentPinMouseUpHandler в файле map.js)
-      window.notifiable.successHandler();
+      window.notifiable.notifiableHandler(successTemplate);
       form.reset();
       setElementDisabled(allFormFieldsets, true);
       setElementDisabled(filtersElements, true);
@@ -180,7 +166,7 @@
       // Если при отправке данных произошла ошибка запроса, нужно показать
       // соответствующее сообщение в блоке main, используя блок #error из шаблона template
     }, function () {
-      window.notifiable.errorHandler();
+      window.notifiable.notifiableHandler(errorTemplate);
     });
   });
 

@@ -49,11 +49,13 @@
   var photoPreview = function (card, photos) {
     var popupPhotos = card.querySelector('.popup__photos');
     var imgTemplate = popupPhotos.querySelector('img');
-    for (var i = 0; i < photos.length; i++) {
+
+    photos.forEach(function (photo) {
       var cloneImg = imgTemplate.cloneNode(true);
-      cloneImg.src = photos[i];
+      cloneImg.src = photo;
       popupPhotos.appendChild(cloneImg);
-    }
+    });
+
     imgTemplate.remove();
   };
 
@@ -65,30 +67,24 @@
     }
   };
 
-  // Первый цикл - (перебор по тегам)
-  // Вторым циклом - для каждого тега обходим все имеющихся удобств апартаментов.
+  // Для каждого тега обходим все имеющихся удобств апартаментов.
   // Ищем совпадения тега и удобства по классу. Если нет совпадения - то удаляем.
   var renderFeatures = function (card, pinFutures) {
 
-    var features = card.querySelector('.popup__features').children;
+    // обращаемся к методу from который находится в пространстве имён Array,
+    // чтобы получить массив из коллекции children
+    var features = Array.from(card.querySelector('.popup__features').children);
 
-    for (var i = 0; i < features.length; i++) {
-      // features[i]; // i-ый элемент массива
-      var isShow = false;
-
-      for (var j = 0; j < pinFutures.length; j++) {
-      // pinFutures[j]; // j-ый элемент массива
-
-        if (features[i].classList.contains('popup__feature--' + pinFutures[j])) {
-          isShow = true;
-        }
-      }
+    features.forEach(function (feature) {
+      var isShow = pinFutures.some(function (pinFuture) {
+        return feature.classList.contains('popup__feature--' + pinFuture);
+      });
 
       if (!isShow) {
-        features[i].remove();
+        feature.remove();
       }
-    }
-  }; // Переписать код на цикл .every, .some, .forEach (48 - 66 строки)
+    });
+  };
 
   window.card = {
     render: renderCard,
