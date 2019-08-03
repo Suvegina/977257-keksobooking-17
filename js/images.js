@@ -14,6 +14,8 @@
       return fileName.endsWith(it);
     });
 
+    // console.log(matches);
+
     if (matches) {
       var reader = new FileReader();
 
