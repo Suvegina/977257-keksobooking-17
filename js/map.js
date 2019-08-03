@@ -28,8 +28,11 @@
   var setDefaulMainPinPosition = function () {
     currentPin.style.left = MAIN_PIN_POSITION_X + 'px';
     currentPin.style.top = MAIN_PIN_POSITION_Y + 'px';
-    window.form.updateAddress(MAIN_PIN_POSITION_X, MAIN_PIN_POSITION_Y);
+    window.form.updateAddress();
   };
+
+
+  window.form.updateAddress();
 
   currentPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -70,6 +73,8 @@
       if (newX > START_COORDINATE_X && newX < END_COORDINATE_X) {
         currentPin.style.left = (currentPin.offsetLeft - shift.x) + 'px';
       }
+
+      window.form.updateAddress();
     };
 
 
@@ -89,12 +94,15 @@
         // вызываю функции генерации недоступных частей формы
         window.form.setElementDisabled(allFormFieldsets, false);
         window.form.setElementDisabled(filtersElements, false);
-        // window.form.updateAddress;
       }
+
+      window.form.updateAddress();
     };
+
 
     document.addEventListener('mousemove', currentPinMouseMoveHandler);
     document.addEventListener('mouseup', currentPinMouseUpHandler);
+
 
     window.map = {
       setDefaulMainPinPosition: setDefaulMainPinPosition

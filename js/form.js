@@ -129,9 +129,6 @@
     address.value = x + ', ' + y;
   };
 
-  updateAddress();
-
-  currentPin.addEventListener('mouseup', updateAddress);
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
   var setElementDisabled = function (elements, isDisabled) {
