@@ -109,15 +109,15 @@
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
           <select id="type" name="type">
-            <option value="bungalo" minlength="0">Бунгало</option>
-            <option value="flat" minlength="1000">Квартира</option>
-            <option value="house" minlength="5000" selected>Дом</option>
-            <option value="palace" minlength="10000">Дворец</option>
+            <option value="bungalo" data-min="0">Бунгало</option>
+            <option value="flat" data-min="1000">Квартира</option>
+            <option value="house" data-min="5000" selected>Дом</option>
+            <option value="palace" data-min="10000">Дворец</option>
           </select>
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input id="price" name="price" type="number" placeholder="5000" maxlength="1000000" required>
+          <input id="price" name="price" type="number" placeholder="5000" min="0" max="1000000" required>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>

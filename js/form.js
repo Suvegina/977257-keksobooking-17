@@ -53,10 +53,10 @@
   buildingType.addEventListener('change', function (evt) {
     var target = evt.currentTarget;
     var selected = target.selectedOptions[0];
-    var minLength = selected.getAttribute('minlength');
+    var minLength = selected.dataset.min;
 
-    nightSelect.setAttribute('min', minLength);
-    nightSelect.setAttribute('placeholder', minLength);
+    nightSelect.min = minLength;
+    nightSelect.placeholder = minLength;
   });
 
   nightSelect.addEventListener('change', function (evt) {
