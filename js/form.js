@@ -35,6 +35,9 @@
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
+  var resetForm = document.querySelector('.ad-form__reset');
+
+
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
     if (titleField.validity.tooShort) {
@@ -45,7 +48,6 @@
       titleField.setCustomValidity('Обязательное текстовое поле');
     }
   });
-
 
   // находим поле select (выпад. список) по id-шнику
   buildingType.addEventListener('change', function (evt) {
@@ -145,30 +147,39 @@
   // перед отправкой формы вызываю функцию валидации для полей "количества комнат и гостей"
   roomCapacityChangeHandler();
 
-  // навешиваю событие при клике на кнопку 'Отправить'
-  form.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    window.upload(new FormData(form), function () {
-      // здесь я возвращаю действия на круги своя ... до того момента,
-      // когда вся форма имела изначальное состояние ...
-      // указываю здесь все по порядку с конца и в начало
-      // (в функции currentPinMouseUpHandler в файле map.js)
-      window.notifiableHandler(successTemplate);
-      form.reset();
-      setElementDisabled(allFormFieldsets, true);
-      setElementDisabled(filtersElements, true);
-      window.pin.removePins();
-      window.card.delete();
-      window.map.setDefaulMainPinPosition();
-      form.classList.add('ad-form--disabled');
-      map.classList.add('map--faded');
 
-      // Если при отправке данных произошла ошибка запроса, нужно показать
-      // соответствующее сообщение в блоке main, используя блок #error из шаблона template
+  // Возвращаем исходное состояние страницы
+  var setPageDefaultState = function () {
+    form.reset();
+    setElementDisabled(allFormFieldsets, true);
+    setElementDisabled(filtersElements, true);
+    window.pin.removePins();
+    window.card.delete();
+    window.map.setDefaulMainPinPosition();
+    form.classList.add('ad-form--disabled');
+    map.classList.add('map--faded');
+  };
+
+  // навешиваю событие при клике на кнопку 'Отправить'
+  var submitFormHandler = function (evt) {
+    evt.preventDefault();
+
+    window.backend.upload(new FormData(form), function () {
+      window.notifiableHandler(successTemplate);
+      setPageDefaultState();
     }, function () {
       window.notifiableHandler(errorTemplate);
     });
-  });
+  };
+
+  var resetClickHandler = function (evt) {
+    evt.preventDefault();
+    setPageDefaultState();
+  };
+
+  form.addEventListener('submit', submitFormHandler);
+  resetForm.addEventListener('click', resetClickHandler);
+
 
   window.form = {
     setElementDisabled: setElementDisabled,

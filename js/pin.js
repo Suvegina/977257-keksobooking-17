@@ -40,7 +40,7 @@
   // функция циклического дублирования пинов
   var renderButton = function () {
     // вызываю функци с синхронизацией адреса (положение главного пина)
-    window.load(function (pinsData) {
+    window.backend.load(function (pinsData) {
       window.pin.allPins = pinsData;
       var newPins = window.filterPins(window.pin.allPins);
       renderPins(newPins);

@@ -10,13 +10,6 @@
     PALACE: 'Дворец'
   };
 
-  // var PIN_TYPES = {
-  //   flat: 'Квартира',
-  //   bungalo: 'Бунгало',
-  //   house: 'Дом',
-  //   palace: 'Дворец'
-  // };
-
   // Заполняем карточку данными с сервера
   var renderCard = function (pin) {
     var card = cardTemplate.cloneNode(true);
@@ -24,7 +17,6 @@
     card.querySelector('.popup__text--address').textContent = pin.offer.address;
     card.querySelector('.popup__text--price').textContent = pin.offer.price + '₽/ночь';
     card.querySelector('.popup__type').textContent = PinTypes[pin.offer.type];
-    // card.querySelector('.popup__type').textContent = /*PIN_TYPES[*/pin.offer.type/*]*/;
     card.querySelector('.popup__text--capacity').textContent = pin.offer.rooms + ' комнаты для ' + pin.offer.guests + ' гостей';
     card.querySelector('.popup__text--time').textContent = 'Заезд после' + pin.offer.checkin + ', выезд до ' + pin.offer.checkout;
     card.querySelector('.popup__description').textContent = pin.offer.description;
