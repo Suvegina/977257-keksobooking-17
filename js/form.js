@@ -127,17 +127,26 @@
 
   //  замена в поле адреса координаты пина. Далее вешаем на событие
   // parseInt преобразование строки в целое число
-  var updateAddress = function () {
-    var x = parseInt(currentPin.style.left.replace('px', ''), 10) + PIN_POSITION_X;
-    var y = parseInt(currentPin.style.top.replace('px', ''), 10) + PIN_POSITION_Y;
+  var setAddress = function (offsetX, offsetY) {
+    var x = parseInt(currentPin.style.left.replace('px', ''), 10) + offsetX;
+    var y = parseInt(currentPin.style.top.replace('px', ''), 10) + offsetY;
     address.value = x + ', ' + y;
   };
 
-  var setDefaulAddress = function () {
-    var x = parseInt(currentPin.style.left.replace('px', ''), 10) + PIN_DEFAULT_OFFSET_X;
-    var y = parseInt(currentPin.style.top.replace('px', ''), 10) + PIN_DEFAULT_OFFSET_Y;
-    address.value = x + ', ' + y;
+  var updateAddress = function () {
+    setAddress(PIN_POSITION_X, PIN_POSITION_Y);
   };
+
+  var setDefaulAddress = function () {
+    setAddress(PIN_DEFAULT_OFFSET_X, PIN_DEFAULT_OFFSET_Y);
+  };
+
+
+  // var setDefaulAddress = function () {
+  //   var x = parseInt(currentPin.style.left.replace('px', ''), 10) + PIN_DEFAULT_OFFSET_X;
+  //   var y = parseInt(currentPin.style.top.replace('px', ''), 10) + PIN_DEFAULT_OFFSET_Y;
+  //   address.value = x + ', ' + y;
+  // };
 
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
