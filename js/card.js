@@ -28,17 +28,12 @@
 
     document.querySelector('.map').appendChild(card);
 
-    // определяю коллбэк функцию для удаления карточки после клика на закрытие
-    var removeCard = function () {
-      card.remove();
-    };
-
     var closeCard = card.querySelector('.popup__close');
-    closeCard.addEventListener('click', removeCard);
+    closeCard.addEventListener('click', deleteCard);
 
     // добавляю события на нажание клавиши ESC
     var escKeydownHandler = function (evt) {
-      window.util.isEscEvent(evt, removeCard);
+      window.util.isEscEvent(evt, deleteCard);
       document.removeEventListener('keydown', escKeydownHandler);
     };
 
@@ -64,6 +59,7 @@
     var selectCard = document.querySelector('.map__card');
     if (selectCard) {
       selectCard.remove();
+      window.pin.mapPin.querySelector('.map__pin--active').classList.remove('map__pin--active');
     }
   };
 

@@ -27,11 +27,9 @@
 
     // Навешиваем обработчик на событие клика для удаления карточки при нажатии клавиш ESC
     element.addEventListener('click', function () {
-      var oldCard = document.querySelector('.map__card');
-      if (oldCard) {
-        oldCard.remove();
-      }
+      window.card.delete();
       window.card.render(pin);
+      element.classList.add('map__pin--active');
     });
 
     return element;
@@ -74,6 +72,7 @@
     // то передав её в ГО видимости (allPins: allPins[] - само значение массивов будет переопределяться)
     // Поэтому, передаем обыекты allPins сразу в глобальную область видимости, для того чтобы данный объект не переопределялся.
     allPins: [],
+    mapPin: mapPin,
     renderButton: renderButton,
     renderPins: renderPins,
     removePins: removePins

@@ -8,7 +8,7 @@
   };
 
 
-  //universal script for load and upload data
+  // universal script for load and upload data
   var createRequest = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
