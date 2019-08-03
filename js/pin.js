@@ -42,7 +42,7 @@
     // вызываю функци с синхронизацией адреса (положение главного пина)
     window.load(function (pinsData) {
       window.pin.allPins = pinsData;
-      var newPins = window.filter.filterPins(window.pin.allPins);
+      var newPins = window.filterPins(window.pin.allPins);
       renderPins(newPins);
     });
   };

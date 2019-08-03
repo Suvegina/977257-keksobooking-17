@@ -17,7 +17,7 @@
   var MAX_PRICE = 50000;
 
   // Функция, которая получает массив пинов и генерирует из тех же пинов новый массив отфильтрованный по значениям фильтра
-  var filterPins = function (pins) {
+  window.filterPins = function (pins) {
     var filteredPins = pins.filter(function (pin) {
       return (
         isPinTypeFiltered(pin) &&
@@ -88,8 +88,4 @@
 
   // Вызываю полученную callback функцию (с функцией устранение дребезга ('debounce()')) на событии формы с фильтрами
   filtersForm.addEventListener('change', filterChangeHandler);
-
-  window.filter = {
-    filterPins: filterPins
-  };
 })();

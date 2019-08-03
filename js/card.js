@@ -88,6 +88,6 @@
 
   window.card = {
     render: renderCard,
-    deleteCard: deleteCard
+    delete: deleteCard
   };
 })();

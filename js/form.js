@@ -153,12 +153,12 @@
       // когда вся форма имела изначальное состояние ...
       // указываю здесь все по порядку с конца и в начало
       // (в функции currentPinMouseUpHandler в файле map.js)
-      window.notifiable.notifiableHandler(successTemplate);
+      window.notifiableHandler(successTemplate);
       form.reset();
       setElementDisabled(allFormFieldsets, true);
       setElementDisabled(filtersElements, true);
       window.pin.removePins();
-      window.card.deleteCard();
+      window.card.delete();
       window.map.setDefaulMainPinPosition();
       form.classList.add('ad-form--disabled');
       map.classList.add('map--faded');
@@ -166,7 +166,7 @@
       // Если при отправке данных произошла ошибка запроса, нужно показать
       // соответствующее сообщение в блоке main, используя блок #error из шаблона template
     }, function () {
-      window.notifiable.notifiableHandler(errorTemplate);
+      window.notifiableHandler(errorTemplate);
     });
   });
 
