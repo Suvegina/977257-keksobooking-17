@@ -3,8 +3,14 @@
 (function () {
 
   // смещение пинов относительно нужной метки
-  var PIN_POSITION_X = 20;
-  var PIN_POSITION_Y = 62;
+  var PIN_POSITION_X = 32;
+  var PIN_POSITION_Y = 87;
+
+  var PIN_DEFAULT_OFFSET_X = 32;
+  var PIN_DEFAULT_OFFSET_Y = 32;
+
+  // Определяю максимальное значение для поля "Цена за ночь"
+  var MAX_VALUE = 1000000;
 
   var map = document.querySelector('.map');
   var currentPin = map.querySelector('.map__pin--main');
@@ -28,8 +34,6 @@
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
 
-  // Определяю максимальное значение для поля "Цена за ночь"
-  var MAX_VALUE = 1000000;
 
   // текстовое содержание при отправки формы
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -129,6 +133,12 @@
     address.value = x + ', ' + y;
   };
 
+  var setDefaulAddress = function () {
+    var x = parseInt(currentPin.style.left.replace('px', ''), 10) + PIN_DEFAULT_OFFSET_X;
+    var y = parseInt(currentPin.style.top.replace('px', ''), 10) + PIN_DEFAULT_OFFSET_Y;
+    address.value = x + ', ' + y;
+  };
+
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
   var setElementDisabled = function (elements, isDisabled) {
@@ -179,7 +189,9 @@
 
 
   window.form = {
+    PIN_POSITION_Y: PIN_POSITION_Y,
     setElementDisabled: setElementDisabled,
+    setDefaulAddress: setDefaulAddress,
     updateAddress: updateAddress
   };
 })();

@@ -15,8 +15,8 @@
   // Обозначаем константы координат для области перетаскивания пина
   var START_COORDINATE_Y = 130;
   var END_COORDINATE_Y = 630;
-  var START_COORDINATE_X = 10;
-  var END_COORDINATE_X = 1120;
+  var START_COORDINATE_X = 0;
+  var END_COORDINATE_X = 1137;
 
   var map = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
@@ -28,11 +28,10 @@
   var setDefaulMainPinPosition = function () {
     currentPin.style.left = MAIN_PIN_POSITION_X + 'px';
     currentPin.style.top = MAIN_PIN_POSITION_Y + 'px';
-    window.form.updateAddress();
+    window.form.setDefaulAddress();
   };
 
-
-  window.form.updateAddress();
+  window.form.setDefaulAddress();
 
   currentPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -64,7 +63,7 @@
 
       var newY = currentPin.offsetTop - shift.y;
       // задаем условие, при котором метка не будет выходить за области экрана по Y
-      if (newY > START_COORDINATE_Y && newY < END_COORDINATE_Y) {
+      if (newY >= START_COORDINATE_Y - window.form.PIN_POSITION_Y && newY <= END_COORDINATE_Y - window.form.PIN_POSITION_Y) {
         currentPin.style.top = (currentPin.offsetTop - shift.y) + 'px';
       }
 
