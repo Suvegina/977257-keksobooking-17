@@ -33,7 +33,7 @@
 
 
   // ф-я загрузки данных с сервера
-  var load = function () {
+  var load = function (onSuccess, onError) {
     var xhr = createRequest(onSuccess, onError);
 
     xhr.open('GET', Url.LOAD);
@@ -42,7 +42,7 @@
 
 
   // ф-я отправки данных на сервер
-  var upload = function (data) {
+  var upload = function (data, onSuccess, onError) {
     var xhr = createRequest(onSuccess, onError);
 
     xhr.open('post', Url.UPLOAD);
