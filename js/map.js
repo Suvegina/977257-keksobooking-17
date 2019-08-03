@@ -8,12 +8,6 @@
 // перемещение метки, события на главной метке.
 (function () {
 
-  var map = document.querySelector('.map');
-  var form = document.querySelector('.ad-form');
-  var currentPin = map.querySelector('.map__pin--main');
-  var allFormFieldsets = form.querySelectorAll('fieldset');
-  var filtersElements = document.querySelector('.map__filters').children;
-
   // задаю начальное положение пина
   var MAIN_PIN_POSITION_X = 570;
   var MAIN_PIN_POSITION_Y = 375;
@@ -23,6 +17,13 @@
   var END_COORDINATE_Y = 630;
   var START_COORDINATE_X = 10;
   var END_COORDINATE_X = 1120;
+
+  var map = document.querySelector('.map');
+  var form = document.querySelector('.ad-form');
+  var currentPin = map.querySelector('.map__pin--main');
+  var allFormFieldsets = form.querySelectorAll('fieldset');
+  var filtersElements = document.querySelector('.map__filters').children;
+
 
   var setDefaulMainPinPosition = function () {
     currentPin.style.left = MAIN_PIN_POSITION_X + 'px';

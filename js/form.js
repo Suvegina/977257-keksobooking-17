@@ -2,6 +2,10 @@
 
 (function () {
 
+  // смещение пинов относительно нужной метки
+  var PIN_POSITION_X = 20;
+  var PIN_POSITION_Y = 62;
+
   var map = document.querySelector('.map');
   var currentPin = map.querySelector('.map__pin--main');
 
@@ -17,10 +21,6 @@
   // определяем нахождение полей select по id-шникам
   var timeIn = form.querySelector('#timein');
   var timeOut = form.querySelector('#timeout');
-
-  // смещение пинов относительно нужной метки
-  var PIN_POSITION_X = 20;
-  var PIN_POSITION_Y = 62;
 
   var filtersElements = document.querySelector('.map__filters').children;
 

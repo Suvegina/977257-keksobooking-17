@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  // Определяем диапазон цен от и до ...
+  var MIN_PRICE = 10000;
+  var MAX_PRICE = 50000;
+
   // находим элемент родителя фильтров, например: (filtersForm)
   // - для того чтобы навесить события на переотрисовку полученных пинов с сервера
   var filtersForm = document.querySelector('.map__filters');
@@ -12,9 +16,6 @@
   var filterFeatures = document.querySelector('#housing-features');
   var inputFeatures = filterFeatures.querySelectorAll('input');
 
-  // Определяем диапазон цен от и до ...
-  var MIN_PRICE = 10000;
-  var MAX_PRICE = 50000;
 
   // Функция, которая получает массив пинов и генерирует из тех же пинов новый массив отфильтрованный по значениям фильтра
   window.filterPins = function (pins) {

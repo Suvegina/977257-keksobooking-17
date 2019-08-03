@@ -5,15 +5,15 @@
 
 (function () {
 
+  // смещение пинов относительно нужной метки
+  var PIN_POSITION_X = 20;
+  var PIN_POSITION_Y = 62;
+
   var mapPin = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   // Проверка размера ширины окна (класса)
   // var MAX_WIDTH = mapPin.offsetWidth;
-
-  // смещение пинов относительно нужной метки
-  var PIN_POSITION_X = 20;
-  var PIN_POSITION_Y = 62;
 
   // Отрисовывание максимального количества пинов
   var MAX_PINS = 5;
