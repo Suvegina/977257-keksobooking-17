@@ -83,6 +83,7 @@
   // создаю callback функцию с функцией debounce(), в которой помещаю все действия связанные с отрисовкой пинов по выбору фильтрам
   var filterChangeHandler = window.debounce(function () {
     var pins = window.filterPins(window.pin.allPins);
+    window.card.delete();
     window.pin.removePins();
     window.pin.renderPins(pins);
   });
