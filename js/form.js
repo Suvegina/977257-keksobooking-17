@@ -16,13 +16,16 @@
   var currentPin = map.querySelector('.map__pin--main');
 
   var form = document.querySelector('.ad-form');
-  var buildingType = form.querySelector('#type');
   var allFormFieldsets = form.querySelectorAll('fieldset');
   var address = document.querySelector('#address');
 
+  // находим поле select (выпад. список: Тип жилья) по id-шнику
+  var buildingType = form.querySelector('#type');
+  // находим поле 'Цена за ночь'
+  var nightSelect = form.querySelector('#price');
+
   // Поле «Заголовок объявления»
   var titleField = form.querySelector('.ad-form__element');
-  var nightSelect = form.querySelector('#price');
 
   // определяем нахождение полей select по id-шникам
   var timeIn = form.querySelector('#timein');
@@ -53,16 +56,18 @@
     }
   });
 
-  // находим поле select (выпад. список) по id-шнику
+  // навешиваю событие на поле 'Тип жилья'
   buildingType.addEventListener('change', function (evt) {
     var target = evt.currentTarget;
     var selected = target.selectedOptions[0];
     var minLength = selected.dataset.min;
 
+    // добавляю синхронизацию минимального значения для выбранного элемента с полем 'Цена за ночь'
     nightSelect.min = minLength;
     nightSelect.placeholder = minLength;
   });
 
+  // навешиваю событие на поле 'Цена за ночь', определяя условием максимальное значение для выбранного элемента
   nightSelect.addEventListener('change', function (evt) {
     var target = evt.currentTarget;
     var value = target.value;
@@ -134,10 +139,12 @@
     address.value = x + ', ' + y;
   };
 
+  // расположение координат пина: острый конец метки
   var updateAddress = function () {
     setAddress(PIN_POSITION_X, PIN_POSITION_Y);
   };
 
+  // расположение координат пина: центр
   var setDefaulAddress = function () {
     setAddress(PIN_DEFAULT_OFFSET_X, PIN_DEFAULT_OFFSET_Y);
   };
