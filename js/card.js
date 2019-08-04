@@ -1,7 +1,6 @@
 'use strict'; // card.js — модуль, который отвечает за создание карточки объявлений;
 
 (function () {
-  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   var PinTypes = {
     FLAT: 'Квартира',
@@ -9,6 +8,8 @@
     HOUSE: 'Дом',
     PALACE: 'Дворец'
   };
+
+  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   // Заполняем карточку данными с сервера
   var renderCard = function (pin) {

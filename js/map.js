@@ -23,6 +23,7 @@
   var currentPin = map.querySelector('.map__pin--main');
   var allFormFieldsets = form.querySelectorAll('fieldset');
   var filtersElements = document.querySelector('.map__filters').children;
+  // var dragged = false;
 
 
   var setDefaulMainPinPosition = function () {
@@ -41,7 +42,6 @@
       y: evt.clientY
     };
 
-    // var dragged = false;
 
     var currentPinMouseMoveHandler = function (moveEvt) {
       moveEvt.preventDefault();
