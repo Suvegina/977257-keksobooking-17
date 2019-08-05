@@ -145,7 +145,7 @@
   };
 
   // расположение координат пина: центр
-  var setDefaulAddress = function () {
+  var setDefaultAddress = function () {
     setAddress(PIN_DEFAULT_OFFSET_X, PIN_DEFAULT_OFFSET_Y);
   };
 
@@ -203,7 +203,7 @@
   window.form = {
     PIN_POSITION_Y: PIN_POSITION_Y,
     setElementDisabled: setElementDisabled,
-    setDefaulAddress: setDefaulAddress,
+    setDefaultAddress: setDefaultAddress,
     updateAddress: updateAddress
   };
 })();

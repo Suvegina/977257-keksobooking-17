@@ -15,9 +15,6 @@
   var mapPin = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-  // Проверка размера ширины окна (класса)
-  // var MAX_WIDTH = mapPin.offsetWidth;
-
   // функция, с помощью которой мы клонируем элемент из Template шаблона в разметке
   var makeButton = function (pin) {
     var element = pinTemplate.cloneNode(true);

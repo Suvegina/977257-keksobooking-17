@@ -29,10 +29,10 @@
   var setDefaulMainPinPosition = function () {
     currentPin.style.left = MAIN_PIN_POSITION_X + 'px';
     currentPin.style.top = MAIN_PIN_POSITION_Y + 'px';
-    window.form.setDefaulAddress();
+    window.form.setDefaultAddress();
   };
 
-  window.form.setDefaulAddress();
+  window.form.setDefaultAddress();
 
   currentPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
