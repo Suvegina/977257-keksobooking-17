@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  // Определяем диапазон цен от и до ...
+  var MIN_PRICE = 10000;
+  var MAX_PRICE = 50000;
+
   // находим элемент родителя фильтров, например: (filtersForm)
   // - для того чтобы навесить события на переотрисовку полученных пинов с сервера
   var filtersForm = document.querySelector('.map__filters');
@@ -12,12 +16,9 @@
   var filterFeatures = document.querySelector('#housing-features');
   var inputFeatures = filterFeatures.querySelectorAll('input');
 
-  // Определяем диапазон цен от и до ...
-  var MIN_PRICE = 10000;
-  var MAX_PRICE = 50000;
 
   // Функция, которая получает массив пинов и генерирует из тех же пинов новый массив отфильтрованный по значениям фильтра
-  var filterPins = function (pins) {
+  window.filterPins = function (pins) {
     var filteredPins = pins.filter(function (pin) {
       return (
         isPinTypeFiltered(pin) &&
@@ -81,15 +82,12 @@
 
   // создаю callback функцию с функцией debounce(), в которой помещаю все действия связанные с отрисовкой пинов по выбору фильтрам
   var filterChangeHandler = window.debounce(function () {
-    var pins = filterPins(window.pin.allPins);
+    var pins = window.filterPins(window.pin.allPins);
+    window.card.delete();
     window.pin.removePins();
     window.pin.renderPins(pins);
   });
 
   // Вызываю полученную callback функцию (с функцией устранение дребезга ('debounce()')) на событии формы с фильтрами
   filtersForm.addEventListener('change', filterChangeHandler);
-
-  window.filter = {
-    filterPins: filterPins
-  };
 })();

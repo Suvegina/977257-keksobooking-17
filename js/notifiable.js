@@ -11,7 +11,7 @@
   // в зависимости от примененного параметра в виде аргумента
 
   // события для отрисовки и удаления окна после успешной отправки формы
-  var notifiableHandler = function (messageTemplate) {
+  window.notifiableHandler = function (messageTemplate) {
     var node = messageTemplate.cloneNode(true);
     tagMain.appendChild(node);
 
@@ -31,10 +31,5 @@
     };
 
     document.addEventListener('keydown', escKeydownHandler);
-  };
-
-
-  window.notifiable = {
-    notifiableHandler: notifiableHandler
   };
 })();

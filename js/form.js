@@ -2,25 +2,34 @@
 
 (function () {
 
+  // смещение пинов относительно нужной метки
+  var PIN_POSITION_X = 32;
+  var PIN_POSITION_Y = 87;
+
+  var PIN_DEFAULT_OFFSET_X = 32;
+  var PIN_DEFAULT_OFFSET_Y = 32;
+
+  // Определяю максимальное значение для поля "Цена за ночь"
+  var MAX_VALUE = 1000000;
+
   var map = document.querySelector('.map');
   var currentPin = map.querySelector('.map__pin--main');
 
   var form = document.querySelector('.ad-form');
-  var buildingType = form.querySelector('#type');
   var allFormFieldsets = form.querySelectorAll('fieldset');
   var address = document.querySelector('#address');
 
+  // находим поле select (выпад. список: Тип жилья) по id-шнику
+  var buildingType = form.querySelector('#type');
+  // находим поле 'Цена за ночь'
+  var nightSelect = form.querySelector('#price');
+
   // Поле «Заголовок объявления»
   var titleField = form.querySelector('.ad-form__element');
-  var nightSelect = form.querySelector('#price');
 
   // определяем нахождение полей select по id-шникам
   var timeIn = form.querySelector('#timein');
   var timeOut = form.querySelector('#timeout');
-
-  // смещение пинов относительно нужной метки
-  var PIN_POSITION_X = 20;
-  var PIN_POSITION_Y = 62;
 
   var filtersElements = document.querySelector('.map__filters').children;
 
@@ -28,12 +37,13 @@
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
 
-  // Определяю максимальное значение для поля "Цена за ночь"
-  var MAX_VALUE = 1000000;
 
   // текстовое содержание при отправки формы
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+
+  var resetForm = document.querySelector('.ad-form__reset');
+
 
   // Ограничения, накладываемые на поле ввода заголовка
   titleField.addEventListener('invalid', function () {
@@ -46,17 +56,18 @@
     }
   });
 
-
-  // находим поле select (выпад. список) по id-шнику
+  // навешиваю событие на поле 'Тип жилья'
   buildingType.addEventListener('change', function (evt) {
     var target = evt.currentTarget;
     var selected = target.selectedOptions[0];
-    var minLength = selected.getAttribute('minlength');
+    var minLength = selected.dataset.min;
 
-    nightSelect.setAttribute('min', minLength);
-    nightSelect.setAttribute('placeholder', minLength);
+    // добавляю синхронизацию минимального значения для выбранного элемента с полем 'Цена за ночь'
+    nightSelect.min = minLength;
+    nightSelect.placeholder = minLength;
   });
 
+  // навешиваю событие на поле 'Цена за ночь', определяя условием максимальное значение для выбранного элемента
   nightSelect.addEventListener('change', function (evt) {
     var target = evt.currentTarget;
     var value = target.value;
@@ -119,17 +130,25 @@
     synchronizationDate(timeOut, timeIn);
   });
 
+
   //  замена в поле адреса координаты пина. Далее вешаем на событие
   // parseInt преобразование строки в целое число
-  var updateAddress = function () {
-    var x = parseInt(currentPin.style.left.replace('px', ''), 10) + PIN_POSITION_X;
-    var y = parseInt(currentPin.style.top.replace('px', ''), 10) + PIN_POSITION_Y;
+  var setAddress = function (offsetX, offsetY) {
+    var x = parseInt(currentPin.style.left.replace('px', ''), 10) + offsetX;
+    var y = parseInt(currentPin.style.top.replace('px', ''), 10) + offsetY;
     address.value = x + ', ' + y;
   };
 
-  updateAddress();
+  // расположение координат пина: острый конец метки
+  var updateAddress = function () {
+    setAddress(PIN_POSITION_X, PIN_POSITION_Y);
+  };
 
-  currentPin.addEventListener('mouseup', updateAddress);
+  // расположение координат пина: центр
+  var setDefaultAddress = function () {
+    setAddress(PIN_DEFAULT_OFFSET_X, PIN_DEFAULT_OFFSET_Y);
+  };
+
 
   // задаю универсальный цикл для недоступности фиелдсетов на форме / и фильтре
   var setElementDisabled = function (elements, isDisabled) {
@@ -145,33 +164,46 @@
   // перед отправкой формы вызываю функцию валидации для полей "количества комнат и гостей"
   roomCapacityChangeHandler();
 
-  // навешиваю событие при клике на кнопку 'Отправить'
-  form.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    window.upload(new FormData(form), function () {
-      // здесь я возвращаю действия на круги своя ... до того момента,
-      // когда вся форма имела изначальное состояние ...
-      // указываю здесь все по порядку с конца и в начало
-      // (в функции currentPinMouseUpHandler в файле map.js)
-      window.notifiable.notifiableHandler(successTemplate);
-      form.reset();
-      setElementDisabled(allFormFieldsets, true);
-      setElementDisabled(filtersElements, true);
-      window.pin.removePins();
-      window.card.deleteCard();
-      window.map.setDefaulMainPinPosition();
-      form.classList.add('ad-form--disabled');
-      map.classList.add('map--faded');
 
-      // Если при отправке данных произошла ошибка запроса, нужно показать
-      // соответствующее сообщение в блоке main, используя блок #error из шаблона template
+  // Возвращаем исходное состояние страницы
+  var setPageDefaultState = function () {
+    form.reset();
+    setElementDisabled(allFormFieldsets, true);
+    setElementDisabled(filtersElements, true);
+    window.card.delete();
+    window.pin.removePins();
+    window.images.resetAvatar();
+    window.images.resetPhotos();
+    window.map.setDefaulMainPinPosition();
+    form.classList.add('ad-form--disabled');
+    map.classList.add('map--faded');
+  };
+
+  // навешиваю событие при клике на кнопку 'Отправить'
+  var submitFormHandler = function (evt) {
+    evt.preventDefault();
+
+    window.backend.upload(new FormData(form), function () {
+      window.notifiableHandler(successTemplate);
+      setPageDefaultState();
     }, function () {
-      window.notifiable.notifiableHandler(errorTemplate);
+      window.notifiableHandler(errorTemplate);
     });
-  });
+  };
+
+  var resetClickHandler = function (evt) {
+    evt.preventDefault();
+    setPageDefaultState();
+  };
+
+  form.addEventListener('submit', submitFormHandler);
+  resetForm.addEventListener('click', resetClickHandler);
+
 
   window.form = {
+    PIN_POSITION_Y: PIN_POSITION_Y,
     setElementDisabled: setElementDisabled,
+    setDefaultAddress: setDefaultAddress,
     updateAddress: updateAddress
   };
 })();

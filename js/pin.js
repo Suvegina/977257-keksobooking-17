@@ -5,18 +5,15 @@
 
 (function () {
 
-  var mapPin = document.querySelector('.map__pins');
-  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-
-  // Проверка размера ширины окна (класса)
-  // var MAX_WIDTH = mapPin.offsetWidth;
-
   // смещение пинов относительно нужной метки
   var PIN_POSITION_X = 20;
   var PIN_POSITION_Y = 62;
 
   // Отрисовывание максимального количества пинов
   var MAX_PINS = 5;
+
+  var mapPin = document.querySelector('.map__pins');
+  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   // функция, с помощью которой мы клонируем элемент из Template шаблона в разметке
   var makeButton = function (pin) {
@@ -25,13 +22,11 @@
     element.style.top = pin.location.y - PIN_POSITION_Y + 'px';
     element.querySelector('img').src = pin.author.avatar;
 
-    // Навешиваем обработчик на событие клика для удаления карточки при нажатии клавиш ESC
+    // Навешиваем обработчик на событие клика для удаления карточки
     element.addEventListener('click', function () {
-      var oldCard = document.querySelector('.map__card');
-      if (oldCard) {
-        oldCard.remove();
-      }
+      window.card.delete();
       window.card.render(pin);
+      element.classList.add('map__pin--active');
     });
 
     return element;
@@ -40,9 +35,9 @@
   // функция циклического дублирования пинов
   var renderButton = function () {
     // вызываю функци с синхронизацией адреса (положение главного пина)
-    window.load(function (pinsData) {
+    window.backend.load(function (pinsData) {
       window.pin.allPins = pinsData;
-      var newPins = window.filter.filterPins(window.pin.allPins);
+      var newPins = window.filterPins(window.pin.allPins);
       renderPins(newPins);
     });
   };
@@ -74,6 +69,7 @@
     // то передав её в ГО видимости (allPins: allPins[] - само значение массивов будет переопределяться)
     // Поэтому, передаем обыекты allPins сразу в глобальную область видимости, для того чтобы данный объект не переопределялся.
     allPins: [],
+    mapPin: mapPin,
     renderButton: renderButton,
     renderPins: renderPins,
     removePins: removePins
