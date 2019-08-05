@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   //  определяю параметры для аватарки
   var avatarParameters = {
@@ -12,13 +12,13 @@
     path: 'img/muffin-grey.svg'
   };
 
-    var customAvatarParameters = {
+  var customAvatarParameters = {
     width: '70',
     height: '70',
     padding: '0'
   };
 
-  //  определяю параметры для аватарки
+  //  определяю параметры для фотографий
   var photoParameters = {
     width: '70',
     height: '70'
@@ -26,18 +26,18 @@
 
 
   // для аватарки
-  var avatarChooser = document.querySelector('.ad-form-header__upload input[type=file]');
+  var avatarChooser = document.querySelector('.ad-form__field input[type=file]');
   var avatarPreview = document.querySelector('.ad-form-header__preview');
   var avatarPreviewImg = document.querySelector('.ad-form-header__preview img');
 
   // для фотографий
   var photoChooser = document.querySelector('.ad-form__upload input[type=file]');
-  var photoPreview = document.querySelector('.ad-form__photo img');
+  var photoPreview = document.querySelector('.ad-form__photo');
   var photoPreviewContainer = document.querySelector('.ad-form__photo-container');
 
 
   // обработка загрузки аватарки
-  var AvatarUpload = function () {
+  var avatarUpload = function () {
     var file = avatarChooser.files[0];
     var fileName = file.name.toLowerCase();
 
@@ -51,18 +51,19 @@
         avatarPreviewImg.src = reader.result;
         avatarPreviewImg.width = customAvatarParameters.width;
         avatarPreviewImg.height = customAvatarParameters.height;
-        avatarPreviewImg.padding = customAvatarParameters.padding;
+        avatarPreview.style.padding = customAvatarParameters.padding;
       });
 
       reader.readAsDataURL(file);
     }
   };
 
+  // обработка загрузки фотографий
   var photoUpload = function () {
     var files = Array.from(photoChooser.files);
     var photo = document.createElement('img');
 
-    files.forEach(function(file) {
+    files.forEach(function (file) {
       var fileName = file.name.toLowerCase();
       var matches = FILE_TYPES.some(function (it) {
         return fileName.endsWith(it);
@@ -95,7 +96,7 @@
     avatarPreviewImg.src = avatarParameters.path;
     avatarPreviewImg.width = avatarParameters.width;
     avatarPreviewImg.height = avatarParameters.height;
-    avatarPreviewImg.style.padding = avatarParameters.padding;
+    avatarPreview.style.padding = avatarParameters.padding;
   };
 
 
@@ -109,9 +110,9 @@
     photoPreviewContainer.appendChild(photoPreview);
   };
 
+  avatarChooser.addEventListener('change', avatarUpload);
+  photoChooser.addEventListener('change', photoUpload);
 
-  avatarChooser.addEventListener('change', AvatarUpload);
-  avatarChooser.addEventListener('change', photoUpload);
 
   window.images = {
     resetAvatar: resetAvatar,
