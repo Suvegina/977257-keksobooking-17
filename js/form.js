@@ -172,6 +172,8 @@
     setElementDisabled(filtersElements, true);
     window.pin.removePins();
     window.card.delete();
+    window.images.resetAvatar();
+    window.images.resetPhotos();
     window.map.setDefaulMainPinPosition();
     form.classList.add('ad-form--disabled');
     map.classList.add('map--faded');
