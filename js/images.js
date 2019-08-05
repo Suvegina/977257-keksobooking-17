@@ -36,16 +36,20 @@
   var photoPreviewContainer = document.querySelector('.ad-form__photo-container');
 
 
-  // обработка загрузки аватарки
-  var avatarUpload = function () {
-    var file = avatarChooser.files[0];
+  var isFileMatches = function (file) {
     var fileName = file.name.toLowerCase();
-
     var matches = FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
     });
 
-    if (matches) {
+    return matches;
+  };
+
+  // обработка загрузки аватарки
+  var avatarUpload = function () {
+    var file = avatarChooser.files[0];
+
+    if (isFileMatches (file)) {
       var reader = new FileReader();
       reader.addEventListener('load', function () {
         avatarPreviewImg.src = reader.result;
@@ -64,12 +68,7 @@
     var photo = document.createElement('img');
 
     files.forEach(function (file) {
-      var fileName = file.name.toLowerCase();
-      var matches = FILE_TYPES.some(function (it) {
-        return fileName.endsWith(it);
-      });
-
-      if (matches) {
+      if (isFileMatches (file)) {
         var reader = new FileReader();
         reader.addEventListener('load', function () {
           photoPreview.appendChild(photo);
