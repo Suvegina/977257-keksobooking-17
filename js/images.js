@@ -49,7 +49,7 @@
   var avatarUpload = function () {
     var file = avatarChooser.files[0];
 
-    if (isFileMatches (file)) {
+    if (isFileMatches(file)) {
       var reader = new FileReader();
       reader.addEventListener('load', function () {
         avatarPreviewImg.src = reader.result;
@@ -68,7 +68,7 @@
     var photo = document.createElement('img');
 
     files.forEach(function (file) {
-      if (isFileMatches (file)) {
+      if (isFileMatches(file)) {
         var reader = new FileReader();
         reader.addEventListener('load', function () {
           photoPreview.appendChild(photo);
