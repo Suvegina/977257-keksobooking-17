@@ -25,7 +25,7 @@
     element.style.top = pin.location.y - PIN_POSITION_Y + 'px';
     element.querySelector('img').src = pin.author.avatar;
 
-    // Навешиваем обработчик на событие клика для удаления карточки при нажатии клавиш ESC
+    // Навешиваем обработчик на событие клика для удаления карточки
     element.addEventListener('click', function () {
       window.card.delete();
       window.card.render(pin);

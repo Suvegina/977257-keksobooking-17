@@ -170,8 +170,8 @@
     form.reset();
     setElementDisabled(allFormFieldsets, true);
     setElementDisabled(filtersElements, true);
-    window.pin.removePins();
     window.card.delete();
+    window.pin.removePins();
     window.images.resetAvatar();
     window.images.resetPhotos();
     window.map.setDefaulMainPinPosition();
