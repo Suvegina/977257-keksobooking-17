@@ -93,6 +93,7 @@
         // вызываю функции генерации недоступных частей формы
         window.form.setElementDisabled(allFormFieldsets, false);
         window.form.setElementDisabled(filtersElements, false);
+        window.form.setPriceMinValue();
       }
 
       window.form.updateAddress();

@@ -9,7 +9,11 @@
   var PIN_DEFAULT_OFFSET_X = 32;
   var PIN_DEFAULT_OFFSET_Y = 32;
 
-  // Определяю максимальное значение для поля "Цена за ночь"
+  // Определяю минимальное значение 'Цена за ночь' выбранного поля
+  // при дефолтном выбранном значении 'Тип жилья' ('Дом = 5000 рублей')
+  var PRICE_MIN_VALUE = 5000;
+
+  // Определяю максимальное значение для поля 'Цена за ночь'
   var MAX_VALUE = 1000000;
 
   var map = document.querySelector('.map');
@@ -56,13 +60,19 @@
     }
   });
 
+  // Определяю набор для минимального значения 'Цена за ночь' дефолтного выбранного поля 'Тип жилья'
+  var setPriceMinValue = function () {
+    nightSelect.min = PRICE_MIN_VALUE;
+    nightSelect.placeholder = PRICE_MIN_VALUE;
+  };
+
   // навешиваю событие на поле 'Тип жилья'
   buildingType.addEventListener('change', function (evt) {
     var target = evt.currentTarget;
     var selected = target.selectedOptions[0];
     var minLength = selected.dataset.min;
 
-    // добавляю синхронизацию минимального значения для выбранного элемента с полем 'Цена за ночь'
+    // прописываю полю 'Цена за ночь' минимальное значение и placeholder - минимального значения 'Типа жилья'
     nightSelect.min = minLength;
     nightSelect.placeholder = minLength;
   });
@@ -204,6 +214,7 @@
     PIN_POSITION_Y: PIN_POSITION_Y,
     setElementDisabled: setElementDisabled,
     setDefaultAddress: setDefaultAddress,
-    updateAddress: updateAddress
+    updateAddress: updateAddress,
+    setPriceMinValue: setPriceMinValue
   };
 })();
